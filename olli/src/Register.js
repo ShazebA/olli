@@ -1,6 +1,4 @@
-import React from 'react';
-
-
+import React, { useState } from "react";
 import {
   MDBBtn,
   MDBContainer,
@@ -13,9 +11,62 @@ import {
   MDBIcon,
   MDBCheckbox
 }
+
 from 'mdb-react-ui-kit';
 
 function Register() {
+
+  const [userData, setUserData] = useState({email: '', password: '',isParent:false,isDependent:false,name:''});
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleChangeCheck = (e) => {
+    const { name, value, type, checked } = e.target;
+    setUserData({ 
+      ...userData, 
+      [name]: type === 'checkbox' ? checked : !value,
+    });
+    
+  };
+  const handleChange = (e)=>{
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+   
+  }
+  
+
+  const handleRegister = async (e)=>{
+    const name = userData.name.split(' ')
+    e.preventDefault();
+    try {
+      const response = await fetch('http://localhost:3000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userData.email,
+          passwordHash: userData.password,
+          isParent:userData.isParent,
+          isDependent:userData.isDependent,
+          fName: name[0],
+          lName: name[1]
+        }),
+      });
+
+      if (response.ok) {
+        
+        alert("Registration successful!")
+        
+      } else {
+        alert("Registration failed: please try again!")
+        
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      
+    }
+  }
+
   return (
     
     <MDBContainer fluid>
@@ -29,29 +80,37 @@ function Register() {
 
               <div className="d-flex flex-row align-items-center mb-4 ">
                 <MDBIcon fas icon="user me-3" size='lg'/>
-                <MDBInput label='Your Name' id='form1' type='text' className='w-100'/>
+                <MDBInput name='name' label='Your Name' id='form1' type='text' className='w-100' onChange={handleChange}/>
               </div>
 
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="envelope me-3" size='lg'/>
-                <MDBInput label='Your Email' id='form2' type='email'/>
+                <MDBInput name='email'label='Your Email' id='form2' type='email' onChange={handleChange}/>
               </div>
 
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="lock me-3" size='lg'/>
-                <MDBInput label='Password' id='form3' type='password'/>
+                <MDBInput  name='password' label='Password' id='form3' type='password'  onChange={handleChange} />
               </div>
 
               <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="key me-3" size='lg'/>
-                <MDBInput label='Repeat your password' id='form4' type='password'/>
+                <MDBInput name='password' label='Repeat your password' id='form4' type='password' required onChange={e => setConfirmPassword(e.target.value)}/>
+                
+              </div>
+
+              <div className='mb-4'>
+                <label>Are you signing up as a parent or dependent?</label>
+                <MDBCheckbox name='isParent' value='' id='flexCheckParent' label='Parent' onChange={handleChangeCheck} />
+                <MDBCheckbox name='isDependent' value='' id='flexCheckDependent' label='Dependent' onChange={handleChangeCheck} />
+
               </div>
 
               <div className='mb-4'>
                 <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Subscribe to our newsletter' />
               </div>
 
-              <MDBBtn className='mb-4' size='lg'>Register</MDBBtn>
+              <MDBBtn className='mb-4' size='lg' onClick={handleRegister}>Register</MDBBtn>
 
             </MDBCol>
 
