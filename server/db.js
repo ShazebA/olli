@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb')
 
-const MONGODB_URI = 'mongodb+srv://ctroubit:123SRGvnss@ossi44.hvbfqvj.mongodb.net/'
+const MONGODB_URI = 'mongodb+srv://ctroubit:Group44OSSI@ossi44.hvbfqvj.mongodb.net/'
 let dbConnect;
 
 module.exports = {

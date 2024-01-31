@@ -7,8 +7,8 @@ const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-const config = require('./config/index');
-const routes = require("./routes");
+// const config = require('./config/index');
+// const routes = require("./routes");
 
 const mongoose  = require('mongoose')
 const app = express();
@@ -19,7 +19,7 @@ app.use(cors())
 app.use(express.static(path.join(__dirname, '..', 'olli','build')));
 app.use(express.json())
 app.use(upload.none());
-app.use("/api", routes);
+// app.use("/api", routes);
 
 let port = 3000;
 const portEmail = process.env.PORT || 3000;
