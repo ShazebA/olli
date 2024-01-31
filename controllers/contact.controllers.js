@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 
 const { MAIL_HOST, MAIL_PORT, MAIL_PROVIDER, MAIL_USERNAME, MAIL_PASSWORD, MAIL_TO } =
 require('../config');
+const { getMaxListeners } = require("../server/schemas/User");
 
 const transporter = nodemailer.createTransport({
   host: MAIL_HOST,
@@ -23,7 +24,7 @@ class ContactController {
   const { name, email, subject, message, mailCopy } = this.request.body;
 
   const mailOptions = {
-    to: [MAIL_TO], // Enter here the email address on which you want to send emails from your customers
+    to: 'edrouillard180@gmail.com', 
     from: name,
     subject,
     text: message,

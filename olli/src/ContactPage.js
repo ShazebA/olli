@@ -8,7 +8,7 @@ import {
   MDBTextArea
 } from 'mdb-react-ui-kit';
 
-export default function Contacts() {
+function Contacts() {
   // State for form fields
   const [formValues, setFormValues] = useState({
     name: '',
@@ -27,7 +27,6 @@ export default function Contacts() {
     });
   };
 
-  // Handle form submission
   // Handle form submission
 const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,3 +88,5 @@ const handleSubmit = async (e) => {
     </MDBValidation>
   );
 }
+
+export default Contacts;

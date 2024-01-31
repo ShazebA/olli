@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Login from './Login';
 import EventsPage from './EventsPage';
 import Register from './Register';
-import Contacts from './Contacts';
+import Contacts from './ContactPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
