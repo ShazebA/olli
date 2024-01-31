@@ -2,20 +2,27 @@ const User = require('./schemas/User')
 require('dotenv').config()
 const {connectToDb, getDb} = require('./db')
 const express = require('express');
+const multer = require("multer");
 const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
+const config = require('./config/index');
+const routes = require("./routes");
 
 const mongoose  = require('mongoose')
 const app = express();
+const upload = multer();
 
 
 app.use(cors())
 app.use(express.static(path.join(__dirname, '..', 'olli','build')));
 app.use(express.json())
+app.use(upload.none());
+app.use("/api", routes);
 
 let port = 3000;
+const portEmail = process.env.PORT || 3000;
 
 app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, "..", 'build', 'index.html'))
@@ -89,7 +96,6 @@ connectToDb((err)=>{
     }
 })
 
-
-
-
-
+app.listen(port, () => {
+    console.log('Express started on port: ', port);
+  });

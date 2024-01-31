@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Login from './Login';
 import EventsPage from './EventsPage';
 import Register from './Register';
+import Contacts from './Contacts';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
@@ -40,6 +41,7 @@ function HomePage() {
         <Route path="/login" element={<Login />} />
         <Route path="/events" element={<EventsPage/>} />
         <Route path="/register" element={<Register/>} />
+        <Route path="/contacts" element={<Contacts/>} />
       </Routes>
     </Router>
       <Container>
