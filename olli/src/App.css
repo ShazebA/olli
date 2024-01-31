@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+/* Styles for the gallery page */
+.gallery-card {
+  transition: transform 0.3s ease-in-out;
+}
+
+.gallery-card:hover {
+  transform: scale(1.05);
+}
+
+h2 {
+  color: #3498db; /* Blue color for the heading */
+}
+
+/* Additional styling for the Card component */
+.card {
+  background-color: #ecf0f1; /* Light gray background color */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #2c3e50; /* Dark gray color for the title */
+}
+
+.card-text {
+  color: #7f8c8d; /* Gray color for the text */
+}
+
+/* Hover effect on the Card component */
+.card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
