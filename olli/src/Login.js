@@ -58,7 +58,7 @@ function Login() {
       <MDBBtn className="mb-4" onClick={handleLoginSubmit}>Sign in</MDBBtn>
 
       <div className="text-center">
-        <p>Not a member? <a href="./Register">Register</a></p>
+        <p>Not a member? <a href="./register">Register</a></p>
     
       </div>
 
