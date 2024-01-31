@@ -21,8 +21,16 @@ app.use(express.json())
 app.use(upload.none());
 // app.use("/api", routes);
 
-let port = 3000;
-const portEmail = process.env.PORT || 3000;
+let port = 3002;
+const portEmail = process.env.PORT || 3001;
+
+const mongoURI = 'mongodb+srv://ctroubit:Group44OSSI@ossi44.hvbfqvj.mongodb.net/'
+
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('Could not connect to MongoDB', err));
 
 app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, "..", 'build', 'index.html'))
@@ -89,12 +97,6 @@ function authenticateToken(req,res,next){
     })
 }
 
-connectToDb((err)=>{
-    if(!err){
-        app.listen(port,()=>console.log(`Listening on port ${port}...`))
-        db = getDb()
-    }
-})
 
 app.listen(port, () => {
     console.log('Express started on port: ', port);
