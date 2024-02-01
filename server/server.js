@@ -1,6 +1,5 @@
 const User = require('./schemas/User')
 require('dotenv').config()
-const {connectToDb, getDb} = require('./db')
 const express = require('express');
 const multer = require("multer");
 const cors = require('cors');
@@ -9,6 +8,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 // const config = require('./config/index');
 // const routes = require("./routes");
+const Event = require('./schemas/Event'); // Import the Event schema
+
 
 const mongoose  = require('mongoose')
 const app = express();
@@ -35,6 +36,8 @@ mongoose.connect(mongoURI, {
 app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, "..", 'build', 'index.html'))
 })
+
+
 
 app.post('/api/register', async(req,res)=>{
 
@@ -96,6 +99,36 @@ function authenticateToken(req,res,next){
         next()
     })
 }
+
+app.get('/api/events', async (req, res) => {
+    try {
+      // Fetch events from the database
+      const events = await Event.find();
+      res.status(200).json(events);
+    } catch (err) {
+      res.status(500).json({ error: 'Failed to fetch events.' });
+    }
+  });
+
+app.post('/api/events', async (req, res) => {
+try {
+    const { title, description, date } = req.body;
+    
+    // Create a new event using the Event schema
+    const newEvent = new Event({ title, description, date });
+    
+    // Save the new event to the database
+    await newEvent.save();
+    
+    res.status(201).json(newEvent);
+} catch (err) {
+    res.status(500).json({ error: 'Failed to create an event.' });
+}
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../olli/build', 'index.html'));
+  });
 
 
 app.listen(port, () => {
