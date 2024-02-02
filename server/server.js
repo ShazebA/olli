@@ -6,9 +6,7 @@ const cors = require('cors');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
-// const config = require('./config/index');
-// const routes = require("./routes");
-const Event = require('./schemas/Event'); // Import the Event schema
+const Event = require('./schemas/Event');
 
 
 const mongoose  = require('mongoose')
@@ -22,7 +20,7 @@ app.use(express.json())
 app.use(upload.none());
 // app.use("/api", routes);
 
-let port = 3002;
+let port = 3000;
 const portEmail = process.env.PORT || 3001;
 
 const mongoURI = 'mongodb+srv://ctroubit:Group44OSSI@ossi44.hvbfqvj.mongodb.net/'
@@ -40,20 +38,24 @@ app.get('/', (req,res) => {
 
 
 app.post('/api/register', async(req,res)=>{
+    console.log(req.body)
 
     const {email, passwordHash,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName} = req.body
 
     try{
-        const existingUser = await db.collection('users').findOne({email});
+        const existingUser = await User.findOne({email});
         if (existingUser) {
             res.status(409).json({ error: 'A user with this email already exists.' });
         } else {
+            
             const hashedPassword = await bcrypt.hash(passwordHash,10)
             const newUser = new User({email, passwordHash:hashedPassword,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName})
-            const result = await db.collection('users').insertOne(newUser);
+            console.log(email)
+            const result = await newUser.save()
             res.status(201).json(result);
         }
     }catch(err){
+        console.log(err)
         res.status(500).json(err);
     }
     
@@ -63,7 +65,7 @@ app.post('/api/login', async(req,res)=>{
     const{email, password} = req.body
     console.log(req.body)
 
-    const user = await db.collection('users').findOne({email});
+    const user = await User.findOne({email});
 
     if(!user){
         return res.status(400).json({error: "User does not exist."})
@@ -72,14 +74,18 @@ app.post('/api/login', async(req,res)=>{
         try{
             if(await bcrypt.compare(password,user.passwordHash)){
                
-                const accessToken = jwt.sign(user.email,process.env.ACCESS_TOKEN_SECRET)
-                res.status(200).json({result:"Success!",accessToken:accessToken,})
+                const accessToken = jwt.sign(user.toObject(),process.env.ACCESS_TOKEN_SECRET)
+
+
+                console.log(accessToken)
+                res.status(200).json({status:'200',accessToken:accessToken})
             }else{
-                res.status(401).json({result:"Incorrect password!"})
+                res.status(401).json({status:401,result:"Incorrect password!"})
             }
 
         }catch(err){
             res.status(500).json(err)
+            console.log(err)
         }
     }
 

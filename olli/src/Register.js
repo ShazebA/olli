@@ -36,6 +36,9 @@ function Register() {
 
   const handleRegister = async (e)=>{
     const name = userData.name.split(' ')
+    if(!name[1]){
+        name[1] = ' '
+    }
     e.preventDefault();
     try {
       const response = await fetch('http://localhost:3000/api/register', {
@@ -55,13 +58,14 @@ function Register() {
 
       if (response.ok) {
         
-        alert("Registration successful!")
+        alert("Registration successful! You'll be brought back to the home screen.")
         
+
       } else {
         alert("Registration failed: please try again!")
-        
       }
     } catch (error) {
+
       console.error('Error:', error);
       
     }
@@ -100,7 +104,7 @@ function Register() {
               </div>
 
               <div className='mb-4'>
-                <label>Are you signing up as a parent or dependent?</label>
+                <label>Parent or dependent?</label>
                 <MDBCheckbox name='isParent' value='' id='flexCheckParent' label='Parent' onChange={handleChangeCheck} />
                 <MDBCheckbox name='isDependent' value='' id='flexCheckDependent' label='Dependent' onChange={handleChangeCheck} />
 
@@ -115,7 +119,7 @@ function Register() {
             </MDBCol>
 
             <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>
-              <MDBCardImage src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp' fluid/>
+              <MDBCardImage src='OLLI-LOGO.png' fluid/>
             </MDBCol>
 
           </MDBRow>
