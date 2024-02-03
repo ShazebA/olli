@@ -28,9 +28,9 @@ function Contacts() {
   };
 
   // Handle form submission
-const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -39,7 +39,7 @@ const handleSubmit = async (e) => {
         },
         body: JSON.stringify(formValues),
       });
-  
+
       if (response.ok) {
         // If the server responds with a success status, clear the form or notify the user
         console.log('Contact form submitted successfully');
@@ -56,36 +56,53 @@ const handleSubmit = async (e) => {
       alert('Error submitting form. Please try again later.');
     }
   };
-  
+
 
   return (
-    <MDBValidation noValidate id='contact-form' className='text-center' style={{ width: '100%', maxWidth: '300px' }}>
-      <h2>Contact us</h2>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+      <MDBValidation noValidate id='contact-form' className='d-flex flex-column align-items-center' style={{ width: '100%', maxWidth: '500px' }}>
 
-      <MDBValidationItem invalid feedback='Please provide your name.'>
-        <MDBInput label='Name' name='name' value={formValues.name} required onChange={handleInputChange} />
-      </MDBValidationItem>
+        <h2>Contact us at O.L.L.I.</h2>
 
-      <MDBValidationItem invalid feedback='Please provide your email.'>
-        <MDBInput type='email' label='Email address' name='email' value={formValues.email} required onChange={handleInputChange} />
-      </MDBValidationItem>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '700px' }}>
+          <MDBValidationItem invalid feedback='Please provide your name.'>
+            <label htmlFor='name'>Full name</label>
+            <MDBInput name='name' value={formValues.name} required onChange={handleInputChange} />
+          </MDBValidationItem>
 
-      <MDBValidationItem invalid feedback='Please provide mail subject.'>
-        <MDBInput label='Subject' name='subject' value={formValues.subject} required onChange={handleInputChange} />
-      </MDBValidationItem>
+          <MDBValidationItem invalid feedback='Please provide your email.'>
+            <label htmlFor='email'>Email address</label>
+            <MDBInput type='email' name='email' value={formValues.email} required onChange={handleInputChange} />
+          </MDBValidationItem>
 
-      <MDBValidationItem invalid feedback='Please provide a message text.'>
-        <MDBTextArea name='message' value={formValues.message} required onChange={handleInputChange} />
-      </MDBValidationItem>
+          <MDBValidationItem invalid feedback='Please provide mail subject.'>
+            <label htmlFor='subject'>Subject</label>
+            <MDBInput name='subject' value={formValues.subject} required onChange={handleInputChange} />
+          </MDBValidationItem>
+        </div>
 
-      <MDBValidationItem feedback=''>
-        <MDBCheckbox name='sendCopy' checked={formValues.sendCopy} label='Send me copy' onChange={handleInputChange} />
-      </MDBValidationItem>
+        <div style={{ width: '700px', minHeight: '100px' }}> {/* Adjust the minHeight to your preference */}
+          <MDBValidationItem invalid feedback='Please provide a message text.'>
+            <label htmlFor='message'>Message</label>
+            <MDBTextArea
+              name='message'
+              value={formValues.message}
+              required
+              onChange={handleInputChange}
+              style={{ width: '100%', minHeight: '100px' }} // Use minHeight to set initial size
+            />
+          </MDBValidationItem>
+        </div>
 
-      <MDBBtn type='submit' color='primary' block className='my-4' onClick={handleSubmit}>
-        Send
-      </MDBBtn>
-    </MDBValidation>
+        <MDBValidationItem feedback=''>
+          <MDBCheckbox name='sendCopy' checked={formValues.sendCopy} label='Send me a copy' onChange={handleInputChange} />
+        </MDBValidationItem>
+
+        <MDBBtn type='submit' color='primary' block className='my-4' onClick={handleSubmit}>
+          Send
+        </MDBBtn>
+      </MDBValidation>
+    </div >
   );
 }
 
