@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes, Navigate, useLocation } from 'react-router-dom';
 import { Navbar, Nav } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 
-// Assuming these components are defined elsewhere in your project
+
 import Login from './Login';
 import HomePage from './HomePage';
 import EventsPage from './EventsPage';
@@ -11,6 +12,7 @@ import Register from './Register';
 import Contacts from './ContactPage';
 import Gallery from './Gallery';
 import Dashboard from "./Dashboard";
+import NewsletterSignup from './NewsletterSignup';
 
 function setToken(userToken) {
   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -22,7 +24,7 @@ function getToken() {
   return userToken?.accessToken;
 }
 
-// NavigationBar component to use useLocation hook correctly
+
 function NavigationBar() {
   const location = useLocation();
   const token = getToken();
@@ -39,6 +41,7 @@ function NavigationBar() {
               <Nav.Link as={Link} to="/events">Events</Nav.Link>
               <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
               {!token && <Nav.Link as={Link} to="/login">Login</Nav.Link>}
+              <Nav.Link as={Link} to="/signup">Newsletter</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -51,7 +54,7 @@ function App() {
   return (
     <>
       <Routes>
-        {/* NavigationBar is included outside of Routes to ensure it renders independently of the current route */}
+
         <Route path="/" element={<><NavigationBar /><HomePage /></>} />
         <Route path="/login" element={<><NavigationBar /><Login setToken={setToken} /></>} />
         <Route path="/events" element={<><NavigationBar /><EventsPage /></>} />
@@ -59,6 +62,7 @@ function App() {
         <Route path="/contact" element={<><NavigationBar /><Contacts /></>} />
         <Route path="/gallery" element={<><NavigationBar /><Gallery /></>} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/signup" element={<><NavigationBar /><NewsletterSignup /></>} />
       </Routes>
     </>
   );

@@ -1,4 +1,5 @@
 const User = require('./schemas/User')
+const UserNewsletter = require('./schemas/UserNewsletter')
 require('dotenv').config()
 const express = require('express');
 const multer = require("multer");
@@ -75,9 +76,6 @@ app.post('/api/login', async(req,res)=>{
             if(await bcrypt.compare(password,user.passwordHash)){
                
                 const accessToken = jwt.sign(user.toObject(),process.env.ACCESS_TOKEN_SECRET)
-
-
-                console.log(accessToken)
                 res.status(200).json({status:'200',accessToken:accessToken})
             }else{
                 res.status(401).json({status:401,result:"Incorrect password!"})
@@ -90,6 +88,8 @@ app.post('/api/login', async(req,res)=>{
     }
 
 })
+
+
 
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization']
@@ -131,6 +131,25 @@ try {
     res.status(500).json({ error: 'Failed to create an event.' });
 }
 });
+
+app.post('/api/newsletter/signup', async (req, res) => {
+    console.log(req.body)
+   
+    const { email, fName, lName } = req.body;
+    try {
+        const existingUser = await UserNewsletter.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ error: 'This email is already signed up for the newsletter.' });
+        }   
+        const newUser = new UserNewsletter({ email, fName, lName });
+        const result = await newUser.save(); 
+        res.status(201).json({ message: 'Signed up for the newsletter successfully!', user: result });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'An error occurred while signing up for the newsletter.' });
+    }
+});
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../olli/build', 'index.html'));
