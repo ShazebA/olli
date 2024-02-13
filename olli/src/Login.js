@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from 'react-bootstrap/Button'
 import {
   MDBContainer,
   MDBInput,
@@ -63,7 +64,7 @@ export default function Login({setToken}) {
       let parse = parseJwt(token.accessToken)
       console.log(parse)
       
-      if(parse.isAdmin==true&&token.statusCode===200){
+      if(parse.isAdmin==true){
         alert('Login successful!')
         setToken(token)
         navigate('/dashboard')
@@ -85,7 +86,9 @@ export default function Login({setToken}) {
         <a href="!#">Forgot password?</a>
       </div>
 
-      <MDBBtn className="mb-4" type='submit'>Sign in</MDBBtn>
+      <Button variant="primary" size="lg" type='submit'>
+        SIGN IN
+      </Button>
 
       <div className="text-center">
         

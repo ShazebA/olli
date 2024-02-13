@@ -11,7 +11,7 @@ import EventsPage from './EventsPage';
 import Register from './Register';
 import Contacts from './ContactPage';
 import Gallery from './Gallery';
-import Dashboard from "./Dashboard";
+import Dashboard from "./admin/Dashboard";
 import NewsletterSignup from './NewsletterSignup';
 
 function setToken(userToken) {
@@ -26,11 +26,11 @@ function getToken() {
 
 
 function NavigationBar() {
-  const location = useLocation();
+  
   const token = getToken();
 
   return (
-    location.pathname !== '/dashboard' && (
+    
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -46,7 +46,7 @@ function NavigationBar() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    )
+    
   );
 }
 
@@ -61,7 +61,7 @@ function App() {
         <Route path="/register" element={<><NavigationBar /><Register /></>} />
         <Route path="/contact" element={<><NavigationBar /><Contacts /></>} />
         <Route path="/gallery" element={<><NavigationBar /><Gallery /></>} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/signup" element={<><NavigationBar /><NewsletterSignup /></>} />
       </Routes>
     </>

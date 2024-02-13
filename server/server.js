@@ -8,9 +8,8 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const Event = require('./schemas/Event');
-
-
-const mongoose  = require('mongoose')
+const mongoose  = require('mongoose');
+const { access } = require('fs');
 const app = express();
 const upload = multer();
 
@@ -39,7 +38,6 @@ app.get('/', (req,res) => {
 
 
 app.post('/api/register', async(req,res)=>{
-    console.log(req.body)
 
     const {email, passwordHash,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName} = req.body
 
@@ -51,7 +49,6 @@ app.post('/api/register', async(req,res)=>{
             
             const hashedPassword = await bcrypt.hash(passwordHash,10)
             const newUser = new User({email, passwordHash:hashedPassword,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName})
-            console.log(email)
             const result = await newUser.save()
             res.status(201).json(result);
         }
@@ -64,7 +61,6 @@ app.post('/api/register', async(req,res)=>{
 
 app.post('/api/login', async(req,res)=>{
     const{email, password} = req.body
-    console.log(req.body)
 
     const user = await User.findOne({email});
 
@@ -76,7 +72,8 @@ app.post('/api/login', async(req,res)=>{
             if(await bcrypt.compare(password,user.passwordHash)){
                
                 const accessToken = jwt.sign(user.toObject(),process.env.ACCESS_TOKEN_SECRET)
-                res.status(200).json({status:'200',accessToken:accessToken})
+                res.status(200).json({accessToken:accessToken})
+                
             }else{
                 res.status(401).json({status:401,result:"Incorrect password!"})
             }
@@ -92,18 +89,21 @@ app.post('/api/login', async(req,res)=>{
 
 
 function authenticateToken(req,res,next){
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if(token==null){
-        return res.sendStatus(401)
-    }
-    jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
-        if(err){
-            return res.sendStatus(403)
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) return res.sendStatus(401); 
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403); 
+
+        
+        if (!user.isAdmin) {
+            return res.status(403).json({ error: "Access denied. User is not an admin." });
         }
-        req.user = user
-        next()
-    })
+
+        req.user = user; 
+        next(); 
+    });
 }
 
 app.get('/api/events', async (req, res) => {
@@ -133,7 +133,7 @@ try {
 });
 
 app.post('/api/newsletter/signup', async (req, res) => {
-    console.log(req.body)
+
    
     const { email, fName, lName } = req.body;
     try {
@@ -150,10 +150,36 @@ app.post('/api/newsletter/signup', async (req, res) => {
     }
 });
 
+app.get('/api/users', async(req,res)=>{
+    try{
+        let users = await User.find()
+        res.status(200).json(users);
+    }
+    catch (err) {
+        res.status(500).json({ error: 'Failed to fetch users.' });
+    }
+})
+app.get('/dashboard',authenticateToken,(req,res)=>{
+    res.json({ message: "Welcome to the admin dashboard!" });
+})
+
+app.delete('/api/users/:userId', async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const result = await User.deleteOne({ _id: userId });
+      if (result.deletedCount === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.status(200).json({ message: "User successfully removed" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to remove user", error: error.message });
+    }
+  });
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../olli/build', 'index.html'));
-  });
+});
 
 
 app.listen(port, () => {
