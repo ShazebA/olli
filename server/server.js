@@ -38,6 +38,25 @@ app.get('/', (req,res) => {
 
 app.use('/feedback', feedBackroutes);
 
+function authenticateToken(req,res,next){
+    const authHeader = req.headers['Authorization'];
+    const token = authHeader;
+    
+    if (token == null) return res.sendStatus(401); 
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403); 
+
+        
+        if (!user.isAdmin) {
+            return res.status(403).json({ error: "Access denied. User is not an admin." });
+        }
+
+        req.user = user; 
+        next(); 
+    });
+}
+
 
 
 app.post('/api/register', async(req,res)=>{
@@ -89,28 +108,23 @@ app.post('/api/login', async(req,res)=>{
 
 })
 
+// In your server.js or a separate routes file
 
+app.post('/api/validateAdmin', (req, res) => {
+    const token = req.headers['authorization'];
 
-function authenticateToken(req,res,next){
-    const authHeader = req.headers['authorization'];
-    const token = JSON.parse(authHeader).accessToken;
-    
-    if (token == null) return res.sendStatus(401); 
+    // const token = JSON.parse(authHeader).accessToken;
+    if (!token) return res.sendStatus(401);
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403); 
+        if (err) return res.sendStatus(403);
 
-        
-        if (!user.isAdmin) {
-            return res.status(403).json({ error: "Access denied. User is not an admin." });
-        }
-
-        req.user = user; 
-        next(); 
+        res.json({ isAdmin: user.isAdmin });
     });
-}
+});
 
-app.get('/api/events', async (req, res) => {
+
+app.get('/api/events', authenticateToken, async (req, res) => {
     try {
       // Fetch events from the database
       const events = await Event.find();
