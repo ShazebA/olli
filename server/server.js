@@ -12,6 +12,7 @@ const mongoose  = require('mongoose');
 const { access } = require('fs');
 const app = express();
 const upload = multer();
+const feedBackroutes = require('./routes/feedBackroutes');
 
 
 app.use(cors())
@@ -20,7 +21,7 @@ app.use(express.json())
 app.use(upload.none());
 // app.use("/api", routes);
 
-let port = 3000;
+let port = 3002;
 const portEmail = process.env.PORT || 3001;
 
 const mongoURI = 'mongodb+srv://ctroubit:Group44OSSI@ossi44.hvbfqvj.mongodb.net/'
@@ -35,6 +36,8 @@ app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, "..", 'build', 'index.html'))
 })
 
+app.use('/feedback', feedBackroutes);
+
 
 
 app.post('/api/register', async(req,res)=>{
@@ -42,7 +45,7 @@ app.post('/api/register', async(req,res)=>{
     const {email, passwordHash,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName} = req.body
 
     try{
-        const existingUser = await User.findOne({email});
+        const existingUser = await User.findOne({eamail});
         if (existingUser) {
             res.status(409).json({ error: 'A user with this email already exists.' });
         } else {

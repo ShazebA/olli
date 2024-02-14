@@ -3,6 +3,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
+import FeedbackForm from './FeedbackForm'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 
 const About = () => {
@@ -189,12 +193,31 @@ const About = () => {
               <Card>
                 <Card.Body>
                   <Card.Title>Contact Us</Card.Title>
-                 <Card.Text>
-                   
-                  </Card.Text>
+                  <Card.Text>
+                <FontAwesomeIcon icon={faEnvelope} /> Email: <a href="mailto:ihartmancheer@gmail.com">ihartmancheer@gmail.com</a>
+              </Card.Text>
+              <Card.Text>
+                <FontAwesomeIcon icon={faFacebook} /> Facebook: <a href="https://www.facebook.com/familyconnectionscheer" target="_blank" rel="noopener noreferrer">Family Connections Cheer</a> 
+              </Card.Text>
                 </Card.Body>
               </Card>
             </Col>
+          </Row>
+
+            {/* Feedback Section */}
+          <Row className="my-3">
+          <Card>
+                <Card.Body>
+                  <Card.Title>Feedback</Card.Title>
+                 <Card.Text>
+                 
+                  </Card.Text>
+                  <Col>
+                  <FeedbackForm />
+                </Col>
+                </Card.Body>
+              </Card>
+            
           </Row>
         </Container>
         </>
