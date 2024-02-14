@@ -28,14 +28,9 @@ function getToken() {
   return userToken?.accessToken;
 }
 
-
-<<<<<<< Updated upstream
-function NavigationBar() {
   
-=======
 function NavigationBar({ toggleTheme }) {
   const location = useLocation();
->>>>>>> Stashed changes
   const token = getToken();
 
   return (
@@ -65,16 +60,6 @@ function App() {
    // State for managing theme
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
-<<<<<<< Updated upstream
-        <Route path="/" element={<><NavigationBar /><HomePage /></>} />
-        <Route path="/login" element={<><NavigationBar /><Login setToken={setToken} /></>} />
-        <Route path="/events" element={<><NavigationBar /><EventsPage /></>} />
-        <Route path="/register" element={<><NavigationBar /><Register /></>} />
-        <Route path="/contact" element={<><NavigationBar /><Contacts /></>} />
-        <Route path="/gallery" element={<><NavigationBar /><Gallery /></>} />
-        <Route path="/dashboard/*" element={<Dashboard />} />
-        <Route path="/signup" element={<><NavigationBar /><NewsletterSignup /></>} />
-=======
   // UseEffect to update localStorage when theme changes
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -97,7 +82,6 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<NewsletterSignup />} />
->>>>>>> Stashed changes
       </Routes>
     </div>
   );
