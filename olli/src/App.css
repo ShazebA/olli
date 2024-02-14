@@ -1,12 +1,15 @@
-/* App.css */
+
 .manage-users {
-  margin: 20px auto;
-  width: 90%;
-  max-width: 800px;
+ 
+  width: 100%;
+  justify-content: center;
+  display: grid;
+  justify-items: center;
 }
 
 .manage-users table {
-  width: 100%;
+  width: 88vw;
+  
   border-collapse: collapse;
 }
 
@@ -26,7 +29,7 @@
 }
 
 .remove-user-btn {
-  background-color: #f44336; /* Red */
+  background-color: #f44336; 
   color: white;
   border: none;
   cursor: pointer;

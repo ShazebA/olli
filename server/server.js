@@ -90,7 +90,8 @@ app.post('/api/login', async(req,res)=>{
 
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const token = JSON.parse(authHeader).accessToken;
+    
     if (token == null) return res.sendStatus(401); 
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
@@ -163,7 +164,7 @@ app.get('/dashboard',authenticateToken,(req,res)=>{
     res.json({ message: "Welcome to the admin dashboard!" });
 })
 
-app.delete('/api/users/:userId', async (req, res) => {
+app.delete('/api/users/:userId',authenticateToken, async (req, res) => {
     try {
       const { userId } = req.params;
       const result = await User.deleteOne({ _id: userId });
@@ -175,6 +176,34 @@ app.delete('/api/users/:userId', async (req, res) => {
       res.status(500).json({ message: "Failed to remove user", error: error.message });
     }
   });
+
+  app.put('/api/users/:userId', authenticateToken, async (req, res) => {
+    const { userId } = req.params;
+    const { email, fName, lName, isAdmin, isParent, isDependent, isActive, isEmailVerified } = req.body;
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, {
+            email,
+            fName,
+            lName,
+            isAdmin,
+            isParent,
+            isDependent,
+            isActive,
+            isEmailVerified
+        }, { new: true });
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.json(updatedUser);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to update user", error: error.message });
+    }
+});
+
 
 
 app.get('*', (req, res) => {

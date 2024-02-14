@@ -29,9 +29,8 @@ export default function Login({setToken}) {
     })
     .then(response => {
       
-      const statusCode = response.status;
       return response.json().then(data => {
-        return { statusCode, ...data };
+        return {...data };
       });
     });
   }
@@ -64,7 +63,7 @@ export default function Login({setToken}) {
       let parse = parseJwt(token.accessToken)
       console.log(parse)
       
-      if(parse.isAdmin==true){
+      if(parse.isAdmin===true){
         alert('Login successful!')
         setToken(token)
         navigate('/dashboard')
