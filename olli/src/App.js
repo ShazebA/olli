@@ -34,7 +34,6 @@ function NavigationBar({ toggleTheme }) {
   const token = getToken();
 
   return (
-    
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -69,19 +68,19 @@ function App() {
   const toggleTheme = () => {
     setTheme(currentTheme => currentTheme === 'light' ? 'dark' : 'light');
   };
+  
   return (
     <div className={theme === 'light' ? 'light-theme' : 'dark-theme'}>
-      <NavigationBar toggleTheme={toggleTheme} /> {/* Passing toggleTheme to NavigationBar */}
+      
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/login" element={<Login setToken={setToken} />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/contact" element={<Contacts />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/signup" element={<NewsletterSignup />} />
+        <Route path="/" element={<><NavigationBar toggleTheme={toggleTheme} /><HomePage /></>} />
+        <Route path="/about" element={<><NavigationBar toggleTheme={toggleTheme} /><About /></>} />
+        <Route path="/login" element={<><NavigationBar toggleTheme={toggleTheme} /><Login setToken={setToken} /></>} />
+        <Route path="/events" element={<><NavigationBar toggleTheme={toggleTheme} /><EventsPage /></>} />
+        <Route path="/contact" element={<><NavigationBar toggleTheme={toggleTheme} /><Contacts /></>} />
+        <Route path="/gallery" element={<><NavigationBar toggleTheme={toggleTheme} /><Gallery /></>} />
+        <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/signup" element={<><NavigationBar toggleTheme={toggleTheme} /><NewsletterSignup /></>} />
       </Routes>
     </div>
   );

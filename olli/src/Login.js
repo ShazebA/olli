@@ -59,6 +59,7 @@ export default function Login({setToken}) {
   const handleLoginSubmit = async e => {
     e.preventDefault();
     const token = await loginUser()
+    console.log(token)
     if(token){
       let parse = parseJwt(token.accessToken)
       console.log(parse)

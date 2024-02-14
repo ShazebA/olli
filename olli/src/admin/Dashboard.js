@@ -14,11 +14,18 @@ function Dashboard() {
 
 
   function logoutUser(){
-    sessionStorage.removeItem('token');
+    let decision = window.confirm('Are you sure you want to log out?')
+    if(decision){
+      sessionStorage.removeItem('token');
     navigate('/')
+    }
+    else{
+      return ;
+    }
     
 
   }
+
 
   return (
     <div>
@@ -44,7 +51,7 @@ function Dashboard() {
         </Container>
       </Navbar>
       <Routes>
-        <Route path="/" element={<DashboardHome />} /> {/* Dashboard home */}
+        <Route path="/" element={<DashboardHome />} /> 
         <Route path="gallery" element={<Gallery />} />
         <Route path="events" element={<EventsPage />} />
         <Route path="manage" element={<ManageUser/>} />
