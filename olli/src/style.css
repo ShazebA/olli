@@ -1,0 +1,171 @@
+/* Base font, background, and text color */
+body {
+    font-family: 'Comic', sans-serif !important; /* Arial or a similar font */
+    color: #333 !important; /* Dark grey text, adjust if necessary */
+    background-color: #e0d6c0 !important;  /* Light beige background */
+        min-height: 100%;
+        margin: 0; /* Remove default margin */
+        display: flex;
+        flex-direction: column;
+      
+  }
+  
+  .bg-body-tertiary.navbar-light {
+    background-color: #617143 !important; /* Custom background color */
+    /* Other custom styles */
+}
+
+.bg-body-tertiary.navbar-light .nav-link {
+    color: #fff !important; /* Custom color for the links */
+}
+  
+  /* Navbar Styles */
+  .navbar {
+    background-color: #617143 !important; /* Olive green color for navbar */
+    color: #000000 !important; /* White text on navbar */
+  }
+  
+  .nav-link {
+    color: #000000 !important; /* White links in navbar */
+  }
+  
+  /* Header Text */
+  h1, h2, h3, h4, h5, h6 {
+    color: #617143 !important; /* Olive green color for headers */
+  }
+  
+  /* Button Styles */
+  .btn-primary {
+    background-color: #007bff !important; /* Example primary button color, replace as needed */
+    border-color: #007bff !important;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3 !important;
+    border-color: #004085 !important;
+  }
+  
+  /* Card Styles */
+  .card {
+    border: 1px solid #ddd !important; /* Light grey border for cards */
+  }
+  
+  .card-title {
+    color: #617143 !important; /* Olive green for card titles */
+  }
+  
+  /* Form Styles */
+  input, textarea {
+    border: 1px solid #ccc !important;
+    padding: 10px !important;
+    margin-bottom: 10px !important;
+    width: 100% !important;
+  }
+
+
+/* #basic-navbar-nav {
+    background-color: #617143; /* Custom background color */
+    /* Other custom styles for the Navbar container  */
+
+    @keyframes fall {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .logo-title-container {
+        text-align: center;
+        margin-top: 50px; /* Adjust the margin as needed */
+      }
+      
+      .logo-fall, .title-fall {
+        animation: fall 1.5s ease-out forwards;
+      }
+      
+      .logo-fall {
+        max-width: 200px; /* Adjust the size as needed */
+        margin-bottom: 20px; /* Space between logo and title */
+      }
+
+      html {
+        height: 100%;
+      }
+      
+      :root {
+        --background-color-light: #e0d6c0; /* Light beige background */
+        --text-color-light: #333; /* Dark grey text */
+      }   
+
+      html, body {
+        background-color: var(--background-color-light);
+        color: var(--text-color-light);
+        margin: 0;
+        padding: 0;
+        /* other styles... */
+      }
+
+
+
+
+/* Dark Theme Styles */
+.dark-theme {
+
+    color: #e0e0e0 !important; /* Light grey text for dark mode */
+    background-color: #262626 !important; /* Dark grey background for dark mode */
+    min-height: 100%;
+    margin: 0; /* Remove default margin */
+    display: flex;
+    flex-direction: column;
+
+    /* Dark mode navbar styles */
+    .navbar, .bg-body-tertiary.navbar-light {
+        background-color: #333 !important; /* Darker color for navbar */
+        color: #e0e0e0 !important; /* Light text on dark navbar */
+    }
+
+    .navbar .nav-link, .bg-body-tertiary.navbar-light .nav-link {
+        color: #e0e0e0 !important; /* Light color for links in navbar */
+    }
+
+    /* Dark mode header text */
+    h1, h2, h3, h4, h5, h6 {
+        color: #e0e0e0 !important; /* Light color for headers */
+    }
+
+    /* Dark mode button styles */
+    .btn-primary {
+        background-color: #555 !important; /* Darker primary button color */
+        border-color: #555 !important;
+    }
+    .btn-primary:hover {
+        background-color: #777 !important;
+        border-color: #555 !important;
+    }
+
+    /* Dark mode card styles */
+    .card {
+        border: 1px solid #444 !important; /* Dark border for cards */
+        background-color: #333 !important; /* Dark background for cards */
+        color: #e0e0e0 !important;
+    }
+    .card-title {
+        color: #e0e0e0 !important; /* Light color for card titles */
+    }
+
+    /* Dark mode form styles */
+    input, textarea {
+        border: 1px solid #555 !important;
+        background-color: #333 !important; /* Dark background for inputs */
+        color: #e0e0e0 !important; /* Light text color for inputs */
+    }
+
+    /* Additional overrides as needed for dark theme... */
+}
+
+
+/* Other existing styles... */      
