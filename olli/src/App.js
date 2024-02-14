@@ -56,6 +56,7 @@ function NavigationBar({ toggleTheme }) {
 }
 
 function App() {
+
    // State for managing theme
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 

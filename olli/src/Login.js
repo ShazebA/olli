@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button'
 import {
   MDBContainer,
@@ -14,6 +14,34 @@ import PropTypes from 'prop-types'
 export default function Login({setToken}) {
   const [userData, setUserData] = useState({email: '', password: '' });
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); 
+
+
+  useEffect(() => {
+    
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    
+    const token = localStorage.getItem('token');
+    const isAdmin = localStorage.getItem('isAdmin'); 
+    if (token) {
+      setIsAuthenticated(true);
+      setIsAdmin(isAdmin);
+    }
+
+    if (isAdmin) {
+      setIsAdmin(true);
+      console.log("isAdmin");
+    }
+  }, []);
+
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -66,7 +94,8 @@ export default function Login({setToken}) {
       
       if(parse.isAdmin===true){
         alert('Login successful!')
-        setToken(token)
+        localStorage.setItem('token', token.accessToken);
+        localStorage.setItem('isAdmin', isAdmin);
         navigate('/dashboard')
       }
     }

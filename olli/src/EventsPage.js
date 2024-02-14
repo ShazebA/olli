@@ -10,6 +10,25 @@ const EventsPage = () => {
     const [events, setEvents] = useState([]);
     const [newEvent, setNewEvent] = useState({ title: '', description: '', date: '' });
     const [eventDates, setEventDates] = useState([]);
+    const [isAdmin, setIsAdmin] = useState(false); // New state for admin status
+
+    
+
+
+    const token = localStorage.getItem('token');
+    console.log(token.toString()) // Assuming the token is stored in session storage
+    if (token) {
+        fetch('/api/validateAdmin', { // You'll need to implement this endpoint
+            method: 'POST',
+            headers: {
+                'authorization': token ,
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => setIsAdmin(data.isAdmin))
+        .catch(error => console.error('Error validating admin status:', error));
+    }
 
 
 
@@ -103,6 +122,8 @@ const EventsPage = () => {
                     />
                 </Col>
                 <Col md={6}>
+                {isAdmin && (
+                    <div>
                     <h2>Events</h2>
                     {eventsForSelectedDate.length > 0 ? (
                         eventsForSelectedDate.map((event, index) => (
@@ -149,6 +170,9 @@ const EventsPage = () => {
                             Add Event
                         </Button>
                     </Form>
+                    </div>
+
+                    )}
                 </Col>
             </Row>
         </Container>
