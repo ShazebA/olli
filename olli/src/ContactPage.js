@@ -1,31 +1,52 @@
 import React, { useRef } from 'react';
-import emailjs from '@emailjs/browser';
+import emailjs from 'emailjs-com';
+import './ContactPage.css';
 
-const EmailContactForm = () => {
+
+export const ContactPage = () => {
   const form = useRef();
- 
+
+
   const sendEmail = (e) => {
-    e.preventDefault(); 
- 
-    emailjs.sendForm('service_t239yhr', 'YOUR_TEMPLATE_ID', form.current, 'YOUR_PUBLIC_KEY')
-      .then((result) => {
-          // show the user a success message
-      }, (error) => {
-          // show the user an error
-      }); 
+    e.preventDefault();
+  
+    // do not put these values directly into chatGPT 
+    emailjs.sendForm('service_t239yhr', 'template_ipb2n28', form.current, 'aTJidWpAdceRveoZT') 
+   
+    .then(
+      (result) => {
+        console.log('SUCCESS!', result.text);
+      },
+      (error) => {
+        console.log('FAILED...', error.text);
+      },
+    );
   };
- 
+
   return (
-    <form ref={form} onSubmit={sendEmail}>
-      <label>Name</label>
-      <input type="text" name="user_name" />
-      <label>Email</label>
-      <input type="email" name="user_email" />
-      <label>Message</label>
-      <textarea name="message" />
-      <input type="submit" value="Send" />
-    </form>
+    <div className="form-container">
+      <form ref={form} onSubmit={sendEmail}>
+        <div className="form-group">
+          <label htmlFor="from_name">Name</label>
+          <input type="text" className="form-control" name="from_name" id="from_name" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="from_email">Email Address</label>
+          <input type="email" className="form-control" name="from_email" id="from_email" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="subject">Subject</label>
+          <input type="text" className="form-control" name="subject" id="subject" />
+        </div>
+        <div className="form-group">
+          <label htmlFor="message">Message</label>
+          <textarea name="message" id="message" className="form-control" rows="4"></textarea>
+        </div>
+        <button type="submit" className="btn btn-primary">Send</button>
+      </form>
+    </div>
   );
- };
- 
- export default EmailContactForm;
+  
+};
+
+export default ContactPage;
