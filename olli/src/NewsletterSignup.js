@@ -47,7 +47,7 @@ function NewsletterSignup() {
   return (
     <div className="tab-content custom-tab-content" align="center">
       <div className="subscribe-panel">
-        <h1>Newsletter!!!</h1>
+        <h1>Newsletter</h1>
         <p>Subscribe to our monthly Newsletter and stay tuned.</p>
 
         <form onSubmit={handleSubmit}>

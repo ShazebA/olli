@@ -37,6 +37,41 @@
   margin-left: 10px;
   border-radius: 5px;
 }
+.edit-user-btn{
+  background-color: BLUE; 
+  color: white;
+  border: none;
+  width:100px;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.save-user-btn{
+  background-color: BLUE; 
+  color: white;
+  border: none;
+  width:100px;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.cancel-user-btn{
+  background-color: #f44336; 
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+.cancel-user-btn:hover{
+  background-color: #d32f2f;
+}
 
 .remove-user-btn:hover {
   background-color: #d32f2f;

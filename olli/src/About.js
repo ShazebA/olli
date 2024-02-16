@@ -1,15 +1,50 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import FeedbackForm from './FeedbackForm'; 
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import FeedbackForm from './FeedbackForm'; 
+
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 
-const About = () => {
+function About(){
+  let isSpeaking = false;
+  const speakText = (text) => {
+    const synth = window.speechSynthesis;
+
+  // If currently speaking, cancel the speech and update the state
+  if (isSpeaking) {
+    synth.cancel();
+    isSpeaking = false; // Update the state to indicate speech is stopped
+    return; // Exit the function
+  }
+
+  // If not currently speaking, proceed to speak
+  const utterThis = new SpeechSynthesisUtterance(text);
+  utterThis.onstart = () => {
+    isSpeaking = true; // Update the state when speech starts
+  };
+  utterThis.onend = () => {
+    isSpeaking = false; // Update the state when speech ends
+  };
+  utterThis.onerror = () => {
+    isSpeaking = false; // Ensure state is updated on error as well
+  };
+  
+  // Speak the text
+  synth.speak(utterThis);
+  };
+
+  function speakSiblingText(event) {
+   
+    const cardText = event.target.closest('.card-body').querySelector('.card-text').textContent;
+    const cardtitle = event.target.closest('.card-body').querySelector('.card-title').textContent;
+    speakText(cardtitle+' . '+cardText);
+  }
+
+  
+
     return (
         <>
           <Container>
@@ -18,6 +53,9 @@ const About = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Vision Statement</Card.Title>
+                    <Button id='tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
+                    <FontAwesomeIcon icon={faVolumeUp} color='black' />
+                    </Button>
                     <Card.Text>
                       To be a community of inclusion and a circle of friendship that supports
                       and enhances the lives of our loved ones with intellectual disabilities as
@@ -41,6 +79,9 @@ const About = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Cheer Group</Card.Title>
+                    <Button id='tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
+                    <FontAwesomeIcon icon={faVolumeUp} color='black' />
+                    </Button>
                     <Card.Text>
                     CHEER Group consists
     of families caring for an
@@ -96,6 +137,9 @@ const About = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Cheer Works</Card.Title>
+                    <Button id='tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
+                    <FontAwesomeIcon icon={faVolumeUp} color='black' />
+                    </Button>
                     <Card.Text>In June, 2023, we opened an
     ice cream/variety store called
     Cheer Canteen and Roxy’s
@@ -125,6 +169,9 @@ const About = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Cheer Connections</Card.Title>
+                    <Button id='tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
+                    <FontAwesomeIcon icon={faVolumeUp} color='black' />
+                    </Button>
                     <Card.Text>
                     Cheer Connections, a
     caregiver support group,
@@ -179,6 +226,9 @@ const About = () => {
                 <Card>
                   <Card.Body>
                     <Card.Title>Cheer Living</Card.Title>
+                    <Button id='tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
+                    <FontAwesomeIcon icon={faVolumeUp} color='black' />
+                    </Button>
                     <Card.Text>
                       An upcoming program focused on independent living skills and living with minimal supports.
                     </Card.Text>
@@ -193,6 +243,9 @@ const About = () => {
               <Card>
                 <Card.Body>
                   <Card.Title>Contact Us</Card.Title>
+                  <Button id='tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
+                    <FontAwesomeIcon icon={faVolumeUp} color='black' />
+                    </Button>
                   <Card.Text>
                 <FontAwesomeIcon icon={faEnvelope} /> Email: <a href="mailto:ihartmancheer@gmail.com">ihartmancheer@gmail.com</a>
               </Card.Text>

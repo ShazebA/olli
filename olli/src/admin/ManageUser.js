@@ -10,7 +10,7 @@ function ManageUser() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/users');
+        const response = await fetch('/api/users');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -31,9 +31,9 @@ function ManageUser() {
     let decision = window.confirm('Are you sure you want to delete this user? It will remove all their data from the database:')
     if(decision){
       try {
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+        const response = await fetch(`/api/users/${userId}`, {
           method: 'DELETE',
-          'Authorization': `${sessionStorage.getItem('token')}`
+          'Authorization': `${localStorage.getItem('token')}`
       
         });
         if (!response.ok) {
@@ -45,38 +45,50 @@ function ManageUser() {
       } catch (error) {
         setError(`Failed to remove user: ${error.message}`);
       }
-    }else{
-      alert('User was NOT deleted.')
-      return;
     }
+
+      return;
+    
     
   };
 
   const saveChanges = async (userId) => {
-    
-    const email = document.querySelector(`#email-${userId}`).value;
+
+    let decision = window.confirm("Are you sure you want to save these changes?")
+
+    if(decision){
+      const email = document.querySelector(`#email-${userId}`).value;
     const fullName = document.querySelector(`#fullName-${userId}`).value;
     const [fName, lName] = fullName.includes(' ') ? fullName.split(' ') : [fullName, '']; 
     const isAdmin = document.querySelector(`#isAdmin-${userId}`).value === 'Admin';
+    console.log(localStorage.getItem('token'))
 
     try {
-      const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+      const response = await fetch(`/api/users/${userId}`, {
         method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `${sessionStorage.getItem('token')}`
+          'Authorization': `${localStorage.getItem('token')}`
           
         },
         body: JSON.stringify({ email, fName, lName, isAdmin }),
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        alert(`HTTP error! status: ${response.status}.Please try again.`);
+        
+      }
+      if(response.ok){
+        alert('User info successfully saved! Window will now refresh.')
+        window.location.reload()
       }
       
       setEditingUserId(null); 
     } catch (error) {
       setError(`Failed to save changes: ${error.message}`);
     }
+    }
+    return ;
+    
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -109,8 +121,8 @@ function ManageUser() {
                     </select>
                   </td>
                   <td>
-                    <button onClick={() => saveChanges(user._id)}>Save</button>
-                    <button onClick={() => setEditingUserId(null)}>Cancel</button>
+                    <button className="save-user-btn" onClick={() => saveChanges(user._id)}>Save</button>
+                    <button className="cancel-user-btn" onClick={() => setEditingUserId(null)}>Cancel</button>
                   </td>
                 </>
               ) : (
@@ -119,8 +131,9 @@ function ManageUser() {
                   <td>{`${user.fName} ${user.lName}`}</td>
                   <td>{user.isAdmin ? 'Admin' : user.isParent ?  'Parent': user.isDependent?'Dependent':""}</td>
                   <td>
+                  <button className="edit-user-btn" onClick={() => setEditingUserId(user._id)}>Edit</button>
                     <button className="remove-user-btn" onClick={() => removeUser(user._id)}>Remove</button>
-                    <button className="edit-user-btn" onClick={() => setEditingUserId(user._id)}>Edit</button>
+                    
                   </td>
                 </>
               )}

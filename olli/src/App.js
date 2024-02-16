@@ -13,6 +13,7 @@ import Contacts from './ContactPage';
 import Gallery from './Gallery';
 import Dashboard from "./admin/Dashboard";
 import NewsletterSignup from './NewsletterSignup';
+import AccessibilityFooter from './AccessibilityFooter';
 import About from './About';
 
 

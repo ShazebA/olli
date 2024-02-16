@@ -48,7 +48,7 @@ export default function Login({setToken}) {
   };
 
   async function loginUser() {
-    return fetch('http://localhost:3000/api/login', {
+    return fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

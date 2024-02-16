@@ -39,8 +39,9 @@ app.get('/', (req,res) => {
 app.use('/feedback', feedBackroutes);
 
 function authenticateToken(req,res,next){
-    const authHeader = req.headers['Authorization'];
+    const authHeader = req.headers['authorization'];
     const token = authHeader;
+    
     
     if (token == null) return res.sendStatus(401); 
 
@@ -64,7 +65,7 @@ app.post('/api/register', async(req,res)=>{
     const {email, passwordHash,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName} = req.body
 
     try{
-        const existingUser = await User.findOne({eamail});
+        const existingUser = await User.findOne({email});
         if (existingUser) {
             res.status(409).json({ error: 'A user with this email already exists.' });
         } else {

@@ -1,12 +1,15 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+
 import image2 from "./istockphoto-1358014313-1024x1024.jpg"
 import image3 from "./istockphoto-486325400-612x612.jpg"
 import image4 from "./istockphoto-1168454133-1024x1024.jpg"
 import image5 from "./istockphoto-539281953-612x612.jpg"
 import image6 from "./istockphoto-1324653833-612x612.jpg"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 
 
 
