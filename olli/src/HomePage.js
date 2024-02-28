@@ -7,14 +7,38 @@ import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
 
 function HomePage() {
 
+  let isSpeaking = false;
   const speakText = (text) => {
     const synth = window.speechSynthesis;
-    // Cancel the current speech synthesis before starting a new one
+
+ 
+  if (isSpeaking) {
     synth.cancel();
-    const utterThis = new SpeechSynthesisUtterance(text);
-    synth.speak(utterThis);
+    isSpeaking = false; 
+    return; 
+  }
+
+  
+  const utterThis = new SpeechSynthesisUtterance(text);
+  utterThis.onstart = () => {
+    isSpeaking = true; 
   };
-  const visionStatement="To be a community of inclusion and a circle of friendship that supports and enhances the lives of our loved ones with intellectual disabilities as well as the whole family."
+  utterThis.onend = () => {
+    isSpeaking = false; 
+  };
+  utterThis.onerror = () => {
+    isSpeaking = false; 
+  };
+  
+  
+  synth.speak(utterThis);
+  };
+  function speakSiblingText(event) {
+   
+    const cardText = event.target.closest('.card-body').querySelector('.card-text').textContent;
+    const cardtitle = event.target.closest('.card-body').querySelector('.card-title').textContent;
+    speakText(cardtitle+' . '+cardText);
+  }
 
   return (
     <>
@@ -27,7 +51,7 @@ function HomePage() {
             <Card>
               <Card.Body>
                 <Card.Title>Vision Statement</Card.Title>
-                <Button  id= 'tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={() => speakText(visionStatement)}>
+                <Button  id= 'tts-button' style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={speakSiblingText}>
                 <FontAwesomeIcon icon={faVolumeUp} color='black' />
               </Button>
                 <Card.Text>

@@ -24,7 +24,8 @@ app.use(upload.none());
 let port = 3002;
 const portEmail = process.env.PORT || 3001;
 
-const mongoURI = 'mongodb+srv://ctroubit:Group44OSSI@ossi44.hvbfqvj.mongodb.net/'
+const mongoURI = process.env.MONGO_URI
+
 
 mongoose.connect(mongoURI, {
     useNewUrlParser: true,
@@ -41,8 +42,6 @@ app.use('/feedback', feedBackroutes);
 function authenticateToken(req,res,next){
     const authHeader = req.headers['authorization'];
     const token = authHeader;
-    
-    
     if (token == null) return res.sendStatus(401); 
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
@@ -69,7 +68,6 @@ app.post('/api/register', async(req,res)=>{
         if (existingUser) {
             res.status(409).json({ error: 'A user with this email already exists.' });
         } else {
-            
             const hashedPassword = await bcrypt.hash(passwordHash,10)
             const newUser = new User({email, passwordHash:hashedPassword,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName})
             const result = await newUser.save()

@@ -33,13 +33,15 @@ function ManageUser() {
       try {
         const response = await fetch(`/api/users/${userId}`, {
           method: 'DELETE',
-          'Authorization': `${localStorage.getItem('token')}`
-      
+          headers: {
+            'Authorization': `${localStorage.getItem('token')}` 
+          }
         });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+        window.location.reload()
+        alert('Deletion successful!')
         const filteredUsers = users.filter(user => user._id !== userId);
         setUsers(filteredUsers);
       } catch (error) {
