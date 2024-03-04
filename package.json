@@ -15,9 +15,29 @@
     "nodemailer": "^6.9.8",
     "path": "^0.12.7",
     "react": "^18.2.0",
-    "react-router-dom": "^6.21.3"
+    "react-router-dom": "^6.21.3",
+    "yaml": "^2.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
-  }
+  },
+  "name": "se3350-project-group44",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShaimaaAliECE/se3350-project-group44.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ShaimaaAliECE/se3350-project-group44/issues"
+  },
+  "homepage": "https://github.com/ShaimaaAliECE/se3350-project-group44#readme",
+  "description": "",
+  "node-version": "20.9.0"
 }

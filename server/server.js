@@ -19,9 +19,9 @@ app.use(cors())
 app.use(express.static(path.join(__dirname, '..', 'olli','build')));
 app.use(express.json())
 app.use(upload.none());
-// app.use("/api", routes);
+app.use("/api", routes);
 
-let port = 3002;
+let port = process.env.PORT || 8080;
 const portEmail = process.env.PORT || 3001;
 
 const mongoURI = process.env.MONGO_URI
