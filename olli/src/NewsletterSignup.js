@@ -19,7 +19,7 @@ function NewsletterSignup() {
         name[1] = ''
     }
     try {
-      const response = await fetch('http://localhost:3000/api/newsletter/signup', {
+      const response = await fetch('api/newsletter/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -1,0 +1,21 @@
+runtime: nodejs20
+instance_class: F2
+
+env_variables:
+  BUCKET_NAME: "example-gcs-bucket"
+  ACCESS_TOKEN_SECRET: "4890e48aa645d0fa9a170bfffff3f541e939f46d7cf45f14a6f96d5fdee8980b072562eaf961c96782ad31b5ff484a22676c288cd44619682b03c3e04bab832a"
+  REFRESH_TOKEN_SECRET: "6e60ad5bc21809bdfc84d300c6840d564c863d41501ee156aa760f571300609d8180f7dbac3900a58aeffa287a8852d95616d263e74be2aac614efcc3dd7052f"
+  NODE_ENV: "development"
+  PORT: 8080
+  MAIL_USERNAME: '745de2256d74ca'
+  MAIL_PASSWORD: '859dc13723dfc1'
+  MAIL_HOST: 'sandbox.smtp.mailtrap.io'
+  MAIL_PORT: 465
+  MAIL_TO: 'edrouillard180@gmail.com'
+  MONGO_URI: 'mongodb+srv://ctroubit:Group44OSSI@ossi44.hvbfqvj.mongodb.net/'
+
+handlers:
+- url: /api
+  script: auto
+- url: /.*
+  script: auto

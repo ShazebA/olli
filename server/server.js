@@ -15,11 +15,15 @@ const upload = multer();
 const feedBackroutes = require('./routes/feedBackroutes');
 
 
-app.use(cors())
+app.use(cors({
+    origin: '*', // or '*' to allow any origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // allowed headers
+    credentials: true, // to allow cookies to be sent with the request
+  }));
 app.use(express.static(path.join(__dirname, '..', 'olli','build')));
 app.use(express.json())
 app.use(upload.none());
-app.use("/api", routes);
 
 let port = process.env.PORT || 8080;
 const portEmail = process.env.PORT || 3001;
@@ -123,7 +127,7 @@ app.post('/api/validateAdmin', (req, res) => {
 });
 
 
-app.get('/api/events', authenticateToken, async (req, res) => {
+app.get('/api/events', async (req, res) => {
     try {
       // Fetch events from the database
       const events = await Event.find();
