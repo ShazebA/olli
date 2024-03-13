@@ -7,7 +7,7 @@ const AccessibilityFooter = () => {
     return (
 
         <div className="footer">
-            <h1>Accessibility Settings</h1>
+            <p>Accessibility Settings</p>
             {/* Add any other accessibility setting elements like this below */}
             <TextSizeChanger />
         </div>

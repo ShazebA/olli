@@ -22,9 +22,9 @@ const TextSizeChanger = () => {
 
     return (
         <div className="text-size-changer">
-            <button onClick={() => changeTextSize(1)}>+</button>
-            <button onClick={() => changeTextSize(-1)}>-</button>
-            <button onClick={resetTextSize} style={{ width: '80px' }}>Reset</button>
+            <button onClick={() => changeTextSize(1)} style={{ fontSize: '18px'}}>+</button>
+            <button onClick={() => changeTextSize(-1)} style={{ fontSize: '18px'}}>-</button>
+            <button onClick={resetTextSize} style={{ fontSize: '18px', width: '80px' }}>Reset</button>
             <label>Text Size</label>
         </div>
     );
