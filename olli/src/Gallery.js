@@ -10,6 +10,8 @@ import image5 from "./istockphoto-539281953-612x612.jpg"
 import image6 from "./istockphoto-1324653833-612x612.jpg"
 
 
+import AccessibilityFooter from './AccessibilityFooter';
+
 
 
 
@@ -27,6 +29,7 @@ const Gallery = () => {
   return (
     <Container className="mt-4">
       <h2 className="text-center mb-4">Cool and Colorful Gallery</h2>
+      <div id="main-content" className="main-content">
       <Row>
         {[{ image: image2, title: "Classroom", description: "Additional information or description for the classrooms can be found." },
           { image: image5, title: "Engaging Activities", description: "Engaging activities for the students in attendance." },
@@ -49,6 +52,8 @@ const Gallery = () => {
           </Col>
         ))}
       </Row>
+      </div>
+      <AccessibilityFooter />
     </Container>
   );
 };

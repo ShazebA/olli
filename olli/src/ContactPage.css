@@ -14,11 +14,9 @@
 
 .main-content {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-top: 2%;
 }
-
 
 .form-container {
   display: flex;

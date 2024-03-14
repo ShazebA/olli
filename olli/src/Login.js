@@ -11,6 +11,8 @@ from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom'; 
 import PropTypes from 'prop-types'
 
+import AccessibilityFooter from './AccessibilityFooter';
+
 export default function Login({setToken}) {
   const [userData, setUserData] = useState({email: '', password: '' });
   const navigate = useNavigate();
@@ -104,30 +106,34 @@ export default function Login({setToken}) {
 
 
   return (
-    <form onSubmit={handleLoginSubmit}>
-      <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
+    <div>
+      <form onSubmit={handleLoginSubmit}>
+        <div id="main-content" className="main-content">
+          <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
 
-      <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' name="email" required onChange={handleChange}/>
-      <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' name="password" required onChange={handleChange}/>
+            <MDBInput wrapperClass='mb-4' label='Email address' id='form1' type='email' name="email" required onChange={handleChange} />
+            <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' name="password" required onChange={handleChange} />
 
-      <div className="d-flex justify-content-between mx-3 mb-4">
-        <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-        <a href="!#">Forgot password?</a>
-      </div>
+            <div className="d-flex justify-content-between mx-3 mb-4">
+              <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
+              <a href="!#">Forgot password?</a>
+            </div>
 
-      <Button variant="primary" size="lg" type='submit'>
-        SIGN IN
-      </Button>
+            <Button variant="primary" size="lg" type='submit'>
+              SIGN IN
+            </Button>
 
-      <div className="text-center">
-        
+            <div className="text-center">
 
-      </div>
 
-      </MDBContainer>
-    </form>
-    
-        
+            </div>
+
+          </MDBContainer>
+        </div>
+      </form>
+      <AccessibilityFooter />
+    </div>
+
   );
 }
 Login.propTypes = {

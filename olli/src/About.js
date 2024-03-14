@@ -8,6 +8,9 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 
+import AccessibilityFooter from './AccessibilityFooter';
+
+
 function About(){
   let isSpeaking = false;
   const speakText = (text) => {
@@ -47,6 +50,9 @@ function About(){
 
     return (
         <>
+
+          <div id="main-content" className="main-content">
+
           <Container>
             <Row className="my-3">
               <Col>
@@ -273,6 +279,10 @@ function About(){
             
           </Row>
         </Container>
+
+        
+        </div>
+        <AccessibilityFooter />
         </>
       );
     }

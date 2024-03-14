@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import AccessibilityFooter from './AccessibilityFooter';
+
 function NewsletterSignup() {
 
     const [formData, setFormData] = useState({ email: '', name: '' });
@@ -45,26 +47,35 @@ function NewsletterSignup() {
   };
 
   return (
-    <div className="tab-content custom-tab-content" align="center">
-      <div className="subscribe-panel">
-        <h1>Newsletter</h1>
-        <p>Subscribe to our monthly Newsletter and stay tuned.</p>
+    <>
+      
+        <div className="tab-content custom-tab-content" id='main-content' align="center">
+          <div className="subscribe-panel">
 
-        <form onSubmit={handleSubmit}>
-          <div className="col-md-4"></div>
-          <div className="col-md-4">
-            <div className="input-group">
-              <span className="input-group-addon"><i className="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
-              <input type="email" className="form-control input-lg" name="email" id="email" placeholder="Enter your Email" onChange={handleChange} required /><br />
-              <input type="text" className="form-control input-lg" name="name" id="name" placeholder="Enter your name" onChange={handleChange} required />
-            </div>
+
+            <h1>Newsletter</h1>
+            <p>Subscribe to our monthly Newsletter and stay tuned.</p>
+
+            <form onSubmit={handleSubmit}>
+              <div className="col-md-4"></div>
+              <div className="col-md-4">
+                <div className="input-group">
+                  <span className="input-group-addon"><i className="glyphicon glyphicon-envelope" aria-hidden="true"></i></span>
+                  <input type="email" className="form-control input-lg" name="email" id="email" placeholder="Enter your Email" onChange={handleChange} required /><br />
+                  <input type="text" className="form-control input-lg" name="name" id="name" placeholder="Enter your name" onChange={handleChange} required />
+                </div>
+              </div>
+              <div className="col-md-4"></div>
+              <br /><br /><br />
+              <button type="submit" className="btn btn-warning btn-lg">Subscribe Now!</button>
+            </form>
           </div>
-          <div className="col-md-4"></div>
-          <br /><br /><br />
-          <button type="submit" className="btn btn-warning btn-lg">Subscribe Now!</button>
-        </form>
+
+
       </div>
-    </div>
+      <AccessibilityFooter />
+    </>
+
   );
 }
 
