@@ -18,6 +18,7 @@ export default function Login({setToken}) {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false); 
+  const [isParent,setIsParent] =  useState(false);
 
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function Login({setToken}) {
     
     const token = localStorage.getItem('token');
     const isAdmin = localStorage.getItem('isAdmin'); 
+    const isParent =  localStorage.getItem('isParent')
     if (token) {
       setIsAuthenticated(true);
       setIsAdmin(isAdmin);
@@ -41,6 +43,9 @@ export default function Login({setToken}) {
     if (isAdmin) {
       setIsAdmin(true);
       console.log("isAdmin");
+    }else if(isParent){
+      setIsParent(true)
+      console.log('isParent')
     }
   }, []);
 
@@ -92,14 +97,19 @@ export default function Login({setToken}) {
     console.log(token)
     if(token){
       let parse = parseJwt(token.accessToken)
-      console.log(parse)
       
       if(parse.isAdmin===true){
         alert('Login successful!')
         localStorage.setItem('token', token.accessToken);
         localStorage.setItem('isAdmin', isAdmin);
         navigate('/dashboard')
-      }
+        return;
+      }else if(parse.isParent===true)
+      alert('Login successful!')
+      localStorage.setItem('token', token.accessToken);
+      localStorage.setItem('isParent', isParent);
+      navigate('/parent')
+      return;
     }
     
   }

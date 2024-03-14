@@ -67,6 +67,8 @@ app.post('/api/register', async(req,res)=>{
 
     const {email, passwordHash,isActive,isEmailVerified,isAdmin,isParent,isDependent,fName,lName} = req.body
 
+    
+
     try{
         const existingUser = await User.findOne({email});
         if (existingUser) {
@@ -86,7 +88,6 @@ app.post('/api/register', async(req,res)=>{
 
 app.post('/api/login', async(req,res)=>{
     const{email, password} = req.body
-
     const user = await User.findOne({email});
 
     if(!user){

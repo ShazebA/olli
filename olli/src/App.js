@@ -8,12 +8,11 @@ import './style.css';
 import Login from './Login';
 import HomePage from './HomePage';
 import EventsPage from './EventsPage';
-import Register from './Register';
 import Contacts from './ContactPage';
 import Gallery from './Gallery';
 import Dashboard from "./admin/Dashboard";
 import NewsletterSignup from './NewsletterSignup';
-import AccessibilityFooter from './AccessibilityFooter';
+import Parent from './parent/Parent';
 import About from './About';
 
 
@@ -82,6 +81,7 @@ function App() {
         <Route path="/contact" element={<><NavigationBar toggleTheme={toggleTheme} /><Contacts /></>} />
         <Route path="/gallery" element={<><NavigationBar toggleTheme={toggleTheme} /><Gallery /></>} />
         <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/parent/*"  element={<Parent/>}/>
         <Route path="/signup" element={<><NavigationBar toggleTheme={toggleTheme} /><NewsletterSignup /></>} />
       </Routes>
     </div>
