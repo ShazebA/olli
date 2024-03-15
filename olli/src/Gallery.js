@@ -31,11 +31,11 @@ const Gallery = () => {
       <h2 className="text-center mb-4">Cool and Colorful Gallery</h2>
       <div id="main-content" className="main-content">
       <Row>
-        {[{ image: image2, title: "Classroom", description: "Additional information or description for the classrooms can be found." },
-          { image: image5, title: "Engaging Activities", description: "Engaging activities for the students in attendance." },
-          { image: image6, title: "Family Importance", description: "Family importance and effects on the school environment." },
-          { image: image3, title: "Our Teachers", description: "Our teachers interacting with our students." },
-          { image: image4, title: "Creativity", description: "Creative outlets for our students in-house." }].map((item, index) => (
+        {[{ image: image2, title: "Classroom. Additional information or description for the classrooms can be found." },
+          { image: image5, title: "Engaging Activities. Engaging activities for the students in attendance." },
+          { image: image6, title: "Family Importance. Family importance and effects on the school environment." },
+          { image: image3, title: "Our Teachers. Our teachers interacting with our students." },
+          { image: image4, title: "Creativity. Creative outlets for our students in-house." }].map((item, index) => (
           <Col key={index} md={4} sm={6} xs={12} className="mb-4">
             <Card className="gallery-card" style={{ position: 'relative' }}>
               <Card.Img variant="top" src={item.image} alt={item.title} />

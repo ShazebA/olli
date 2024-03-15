@@ -47,7 +47,7 @@ function NavigationBar({ toggleTheme }) {
               {!token && <Nav.Link as={Link} to="/login">Login</Nav.Link>}
               <Nav.Link as={Link} to="/signup">Newsletter</Nav.Link>
             </Nav>
-            <button onClick={toggleTheme} style={{ marginLeft: 'auto' }}>Light/Dark Mode</button>
+            <button onClick={toggleTheme} style={{ marginLeft: 'auto' }}>Light/Dark/High Contrast</button>
           </Navbar.Collapse>
         </Container>
       </Navbar>
@@ -65,13 +65,20 @@ function App() {
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  // Function to toggle the theme
   const toggleTheme = () => {
-    setTheme(currentTheme => currentTheme === 'light' ? 'dark' : 'light');
+    setTheme(currentTheme => {
+      if (currentTheme === 'light-theme') {
+        return 'dark-theme';
+      } else if (currentTheme === 'dark-theme') {
+        return 'high-contrast';
+      } else {
+        return 'light-theme';
+      }
+    });
   };
   
   return (
-    <div className={theme === 'light' ? 'light-theme' : 'dark-theme'}>
+    <div className={theme}>
       
       <Routes>
         <Route path="/" element={<><NavigationBar toggleTheme={toggleTheme} /><HomePage /></>} />

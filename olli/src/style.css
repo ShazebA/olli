@@ -164,8 +164,66 @@ body {
         color: #e0e0e0 !important; /* Light text color for inputs */
     }
 
-    /* Additional overrides as needed for dark theme... */
 }
 
+.high-contrast body {
+  background-color: #ffffff !important;  /* Pure white background */
+  color: #000000 !important;  /* Pure black text */
+}
 
-/* Other existing styles... */      
+.high-contrast .navbar, .high-contrast .bg-body-tertiary.navbar-light {
+  background-color: #000000 !important;  /* Pure black background for navbar */
+  color: #ffffff !important;  /* Pure white text */
+}
+
+.high-contrast .nav-link {
+  color: #ffffff !important;  /* Pure white links */
+}
+
+.high-contrast .btn-primary {
+  background-color: #000000 !important;  /* Pure black button */
+  border-color: #ffffff !important;  /* Pure white border */
+  color: #ffffff !important;  /* Pure white text on buttons */
+}
+
+.high-contrast .btn-primary:hover {
+  background-color: #ffffff !important;  /* Pure white button on hover */
+  border-color: #000000 !important;  /* Pure black border on hover */
+  color: #000000 !important;  /* Pure black text on hover */
+}
+
+.high-contrast .card {
+  border: 2px solid #000000 !important;  /* Pure black border for cards */
+  background-color: #ffffff !important;  /* Pure white background for cards */
+}
+
+.high-contrast .card-title {
+  color: #000000 !important;  /* Pure black for card titles */
+}
+
+.high-contrast input, .high-contrast textarea {
+  border: 2px solid #000000 !important;  /* Pure black border for form elements */
+  background-color: #ffffff !important;  /* Pure white background */
+  color: #000000 !important;  /* Pure black text */
+}
+
+/* General Focus Styles */
+*:focus {
+  outline: 3px solid #1c440f !important; /* Red outline */
+  outline-offset: 2px; /* Space between the element and the outline */
+}
+
+/* Specific Focus Styles */
+.high-contrast *:focus {
+  outline: 4px solid #00ff00 !important; /* Bright green outline for high contrast */
+}
+
+/* Adjusting for specific elements if needed */
+.high-contrast button:focus, 
+.high-contrast a:focus, 
+.high-contrast input:focus {
+  /* Specific styles for buttons, links, and inputs */
+  background-color: #000000; /* Optional: change background color */
+  color: #ffffff; /* Optional: change text color */
+  outline: 4px dashed #00ff00; /* Dashed outline for a different visual effect */
+}
