@@ -14,6 +14,7 @@ import Dashboard from "./admin/Dashboard";
 import NewsletterSignup from './NewsletterSignup';
 import Parent from './parent/Parent';
 import About from './About';
+import Feedback from './Feedback';
 
 
 
@@ -46,6 +47,7 @@ function NavigationBar({ toggleTheme }) {
               <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
               {!token && <Nav.Link as={Link} to="/login">Login</Nav.Link>}
               <Nav.Link as={Link} to="/signup">Newsletter</Nav.Link>
+              <Nav.Link as={Link} to="/feedback">Feedback</Nav.Link>
             </Nav>
             <button onClick={toggleTheme} style={{ marginLeft: 'auto' }}>Light/Dark/High Contrast</button>
           </Navbar.Collapse>
@@ -87,6 +89,7 @@ function App() {
         <Route path="/events" element={<><NavigationBar toggleTheme={toggleTheme} /><EventsPage /></>} />
         <Route path="/contact" element={<><NavigationBar toggleTheme={toggleTheme} /><Contacts /></>} />
         <Route path="/gallery" element={<><NavigationBar toggleTheme={toggleTheme} /><Gallery /></>} />
+        <Route path='/feedback' element={<><NavigationBar toggleTheme={toggleTheme} /><Feedback /></>}/>
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/parent/*"  element={<Parent/>}/>
         <Route path="/signup" element={<><NavigationBar toggleTheme={toggleTheme} /><NewsletterSignup /></>} />

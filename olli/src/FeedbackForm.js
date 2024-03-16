@@ -1,16 +1,24 @@
 // FeedbackForm.js
 import React, { useState } from 'react';
+import Rating from './Rating';
 import { Form, Button, Alert } from 'react-bootstrap';
 
 const FeedbackForm = () => {
-  const [feedback, setFeedback] = useState({ name: '', comment: '' });
+  const [feedback, setFeedback] = useState({ name: '', comment: '' ,starRating:0});
   const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFeedback({ ...feedback, [name]: value });
+    console.log(feedback)
   };
 
+  const handleRatingChange = (rating) => {
+    setFeedback({ ...feedback, starRating: rating });
+    console.log(feedback)
+  };
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -23,7 +31,7 @@ const FeedbackForm = () => {
       });
       if (response.ok) {
         setShowAlert(true);
-        setFeedback({ name: '', comment: '' }); // Reset form
+        setFeedback({ name: '', comment: '' ,starRating:0}); // Reset form
         setTimeout(() => setShowAlert(false), 5000); // Hide alert after 5 seconds
       }
     } catch (error) {
@@ -46,6 +54,8 @@ const FeedbackForm = () => {
             required
           />
         </Form.Group>
+        <Rating onRating={handleRatingChange}></Rating>
+        
         <Form.Group className="mb-3">
           <Form.Label>Comment</Form.Label>
           <Form.Control
