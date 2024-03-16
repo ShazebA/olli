@@ -227,3 +227,12 @@ body {
   color: #ffffff; /* Optional: change text color */
   outline: 4px dashed #00ff00; /* Dashed outline for a different visual effect */
 }
+
+.event-dot {
+  height: 7px;
+  width: 7px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 2px;
+}

@@ -13,6 +13,7 @@ const eventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const Event = mongoose.model('Event', eventSchema, 'events');

@@ -112,7 +112,7 @@ app.post('/api/login', async(req,res)=>{
 
 })
 
-// In your server.js or a separate routes file
+
 
 app.post('/api/validateAdmin', (req, res) => {
     const token = req.headers['authorization'];
@@ -127,8 +127,106 @@ app.post('/api/validateAdmin', (req, res) => {
     });
 });
 
+app.post('/api/validateParent', (req, res) => {
+    const token = req.headers['authorization'];
 
-app.get('/api/events', async (req, res) => {
+    // const token = JSON.parse(authHeader).accessToken;
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+
+        res.json({ isParent: user.isParent });
+    });
+});
+app.post('/api/validateUserId', (req, res) => {
+    const token = req.headers['authorization'];
+
+    // const token = JSON.parse(authHeader).accessToken;
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+
+        res.json({ userID: user._id });
+    });
+});
+
+app.post('/api/addParentEvent', async (req, res) => {
+    try {
+        const { eventId, parentId } = req.body;
+
+        // Find the event by ID
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ error: 'Event not found.' });
+        }
+
+        // Optionally, check if the parent is already RSVPed to avoid duplicates
+        if (event.parents && event.parents.includes(parentId)) {
+            return res.status(400).json({ message: 'Parent already RSVPed to this event.' });
+        }
+
+        // Add the parent to the event's RSVP list (assuming 'parents' is an array of user IDs)
+        event.parents = event.parents ? [...event.parents, parentId] : [parentId];
+        
+        // Save the updated event
+        await event.save();
+
+        res.status(200).json({ message: 'RSVP successful.', event });
+    } catch (err) {
+        console.error('Error adding parent to event:', err);
+        res.status(500).json({ error: 'Failed to RSVP to the event.' });
+    }
+});
+
+app.delete('/api/removeParentEvent', async (req, res) => {
+    try {
+        const { eventId, parentId } = req.body;
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found.' });
+        }
+
+        // Remove the parentId from the event's parents array
+        const index = event.parents.indexOf(parentId);
+        if (index > -1) {
+            event.parents.splice(index, 1);
+            await event.save();
+            res.json({ message: 'RSVP cancelled successfully.' });
+        } else {
+            // Parent was not in the RSVP list
+            res.status(400).json({ message: 'Parent had not RSVPed.' });
+        }
+    } catch (error) {
+        console.error('Error removing parent RSVP:', error);
+        res.status(500).json({ error: 'Failed to cancel RSVP.' });
+    }
+});
+
+app.delete('/api/removeParentFromEvent', authenticateToken, async (req, res) => {
+    const { eventId, parentId } = req.body;
+    try {
+        const event = await Event.findById(eventId);
+        if (!event) {
+            return res.status(404).json({ message: 'Event not found.' });
+        }
+        const index = event.parents.indexOf(parentId);
+        if (index > -1) {
+            event.parents.splice(index, 1);
+            await event.save();
+            res.json({ message: 'Parent removed from RSVP list.' });
+        } else {
+            res.status(404).json({ message: 'Parent not found in RSVP list.' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to remove parent from RSVP list.' });
+    }
+});
+
+
+
+app.get('/api/loadEvents', async (req, res) => {
     try {
       // Fetch events from the database
       const events = await Event.find();
@@ -138,12 +236,15 @@ app.get('/api/events', async (req, res) => {
     }
   });
 
+
+
 app.post('/api/events', async (req, res) => {
 try {
     const { title, description, date } = req.body;
+    const parents = [];
     
     // Create a new event using the Event schema
-    const newEvent = new Event({ title, description, date });
+    const newEvent = new Event({ title, description, date, parents});
     
     // Save the new event to the database
     await newEvent.save();
@@ -153,6 +254,23 @@ try {
     res.status(500).json({ error: 'Failed to create an event.' });
 }
 });
+
+app.get('/api/users/:userId', authenticateToken, async (req, res) => {
+    try {
+        const { userId } = req.params; // Extract user ID from URL parameters
+        const user = await User.findById(userId); // Query database for user
+
+        if (!user) {
+            return res.status(404).send('User not found'); // User not found
+        }
+
+        res.json(user); // Send user object as JSON
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving user'); // Internal server error
+    }
+});
+
 
 app.post('/api/newsletter/signup', async (req, res) => {
 
