@@ -13,6 +13,8 @@ const { access } = require('fs');
 const app = express();
 const upload = multer();
 const feedBackroutes = require('./routes/feedBackroutes');
+const Message = require('./schemas/Message'); // Adjust the path based on your structure
+
 
 
 app.use(cors({
@@ -61,6 +63,17 @@ function authenticateToken(req,res,next){
     });
 }
 
+function authenticateUser(req,res,next){
+    const authHeader = req.headers['authorization'];
+    const token = authHeader;
+    if (token == null) return res.sendStatus(401); 
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403); 
+        req.user = user; 
+        next(); 
+    });
+}
 
 
 app.post('/api/register', async(req,res)=>{
@@ -139,6 +152,24 @@ app.post('/api/validateParent', (req, res) => {
         res.json({ isParent: user.isParent });
     });
 });
+
+app.post('/api/validateDependent', (req, res) => {
+    const token = req.headers['authorization'];
+
+    // const token = JSON.parse(authHeader).accessToken;
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+
+        res.json({ idDependent: user.isDependent });
+    });
+});
+
+// DELETE message route
+
+
+
 app.post('/api/validateUserId', (req, res) => {
     const token = req.headers['authorization'];
 
@@ -343,7 +374,77 @@ app.delete('/api/users/:userId',authenticateToken, async (req, res) => {
     }
 });
 
+app.get('/api/messages/:group', authenticateUser, async (req, res) => {
+    const { group } = req.params;
+  
+    try {
+      const messages = await Message.find({ group })
+        .sort({ createdAt: 'asc' })
+        .populate('senderId', 'fName lName') // Populate sender's first and last name
+        .exec();
+  
+      // Map over messages to format them as needed
+      const formattedMessages = messages.map((msg) => ({
+        ...msg.toObject(),
+        senderName: `${msg.senderId.fName} ${msg.senderId.lName}`,
+      }));
+  
+      res.json(formattedMessages);
+    } catch (error) {
+      console.error('Failed to fetch messages:', error);
+      res.status(500).json({ message: 'Failed to fetch messages.' });
+    }
+  });
+  
+  app.post('/api/sendMessage', authenticateUser, async (req, res) => {
+    const { text, group } = req.body;
+      
+    try {
+      const newMessage = new Message({
+        text,
+        senderId: req.user._id, // Assuming the user ID is available on `req.user`
+        group,
+      });
+      await newMessage.save();
+      res.status(201).json(newMessage);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      res.status(500).json({ message: 'Failed to send message.' });
+    }
+  });
 
+  app.post('/api/sendAnnouncement', authenticateToken, async (req, res) => {
+    const { text, group } = req.body;
+  
+  
+    try {
+      const newMessage = new Message({
+        text,
+        senderId: req.user._id, // Assuming the user ID is available on `req.user`
+        group,
+      });
+      await newMessage.save();
+      res.status(201).json(newMessage);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      res.status(500).json({ message: 'Failed to send message.' });
+    }
+  });
+
+  app.delete('/api/messages/:messageId', authenticateToken, async (req, res) => {
+    const { messageId } = req.params;
+
+    try {
+        const message = await Message.findByIdAndDelete(messageId);
+        if (!message) {
+            return res.status(404).json({ message: "Message not found." });
+        }
+        res.json({ message: "Message deleted successfully." });
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        res.status(500).json({ message: "Failed to delete message." });
+    }
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../olli/build', 'index.html'));

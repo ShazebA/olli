@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import DashboardHome from '../admin/DashboardHome';
 import Gallery from '../Gallery';
 import EventsPage from '../EventsPage';
+import Chat from '../chat/Chat';
 
 
 function Parent() {
@@ -32,6 +33,7 @@ function Parent() {
               <Nav.Link as={Link} to="/parent">Dashboard Home</Nav.Link>
               <Nav.Link as={Link} to="/parent/gallery">Gallery</Nav.Link>
               <Nav.Link as={Link} to="/parent/events">Events</Nav.Link>
+              <Nav.Link as={Link} to="/parent/chat">Chat</Nav.Link>
               
             </Nav>
             <Nav className="justify-content-end">
@@ -47,6 +49,7 @@ function Parent() {
         <Route path="/" element={<DashboardHome />} /> 
         <Route path="gallery" element={<Gallery />} />
         <Route path="events" element={<EventsPage />} />
+        <Route path="chat" element={<Chat />} />
         
       </Routes>
     </div>

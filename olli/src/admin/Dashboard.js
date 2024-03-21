@@ -9,6 +9,7 @@ import EventsPage from '../EventsPage';
 import ManageUser from './ManageUser'
 import Register from './Register';
 import FeedbackDisplay from './FeedbackDisplay'; 
+import Chat from '../chat/Chat';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function Dashboard() {
               <Nav.Link as={Link} to="/dashboard">Dashboard Home</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/gallery">Gallery</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/events">Events</Nav.Link>
+              <Nav.Link as={Link} to="/parent/chat">Chat</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/manage">Manage Users</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/register">Register Account</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/feedback">Feedback</Nav.Link> 
@@ -56,6 +58,7 @@ function Dashboard() {
         <Route path="/" element={<DashboardHome />} /> 
         <Route path="gallery" element={<Gallery />} />
         <Route path="events" element={<EventsPage />} />
+        <Route path="chat" element={<Chat />} />
         <Route path="manage" element={<ManageUser/>} />
         <Route path="register" element={<Register />} />
         <Route path="feedback" element={<FeedbackDisplay />} /> 

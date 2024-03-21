@@ -16,15 +16,15 @@ const EventsPage = () => {
     const [eventsList, setEventsList] = useState([]);
     const [isParent, setIsParent] = useState(false); // New state for parent status
     const [userID, setUserID] = useState('');
-    const [hasRSVPed, setHasRSVPed] = ([]); // New state for RSVP status
     const [rsvpStatuses, setRsvpStatuses] = useState({});
     const [userData, setUserData] = useState([]);
+    const [isDependent, setIsDependent] = useState(false); // New state for child status
 
 
     const token = sessionStorage.getItem('token');
     useEffect(() => {
     if (token) {
-        fetch('/api/validateAdmin', { // You'll need to implement this endpoint
+        fetch('/api/validateAdmin', { 
             method: 'POST',
             headers: {
                 'authorization': token ,
@@ -39,7 +39,7 @@ const EventsPage = () => {
 
 useEffect(() => {
     if (token) {
-        fetch('/api/validateParent', { // You'll need to implement this endpoint
+        fetch('/api/validateParent', { 
             method: 'POST',
             headers: {
                 'authorization': token ,
@@ -50,6 +50,21 @@ useEffect(() => {
         .then(data => setIsParent(data.isParent))
         .catch(error => console.error('Error validating parent status:', error));
     }
+}, [token]);
+
+useEffect(() => {
+if (token) {
+    fetch('/api/validateDependent', { 
+        method: 'POST',
+        headers: {
+            'authorization': token ,
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => setIsDependent(data.isChild))
+    .catch(error => console.error('Error validating parent status:', error));
+}
 }, [token]);
 
 useEffect(() => {

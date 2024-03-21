@@ -1,0 +1,24 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Adjust based on your layout */
+  }
+  
+  .message-list {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  
+  .message-item {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-form {
+    display: flex;
+    margin-top: auto;
+  }
+  
+  .delete-icon:hover {
+    cursor: pointer;
+}
