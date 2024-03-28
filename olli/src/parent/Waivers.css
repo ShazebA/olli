@@ -1,0 +1,94 @@
+.waivers-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .waivers-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .waiver-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .waiver-list li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .waiver-list li:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .waiver-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .waiver-details h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .waiver-details p {
+    margin-bottom: 20px;
+    color: #666;
+  }
+  
+  .waiver-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .waiver-form input[type="text"] {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .waiver-form h4 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .waiver-form .dependent-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .waiver-form .dependent-checkbox label {
+    margin-left: 5px;
+    color: #666;
+  }
+  
+  .waiver-form button[type="submit"] {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .waiver-form button[type="submit"]:hover {
+    background-color: #0056b3;
+  }

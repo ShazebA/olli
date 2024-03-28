@@ -7,6 +7,7 @@ import DashboardHome from '../admin/DashboardHome';
 import Gallery from '../Gallery';
 import EventsPage from '../EventsPage';
 import Chat from '../chat/Chat';
+import Waivers from './Waivers';
 
 
 function Parent() {
@@ -33,6 +34,7 @@ function Parent() {
               <Nav.Link as={Link} to="/parent">Dashboard Home</Nav.Link>
               <Nav.Link as={Link} to="/parent/gallery">Gallery</Nav.Link>
               <Nav.Link as={Link} to="/parent/events">Events</Nav.Link>
+              <Nav.Link as={Link} to="/parent/waivers">Waivers</Nav.Link>
               <Nav.Link as={Link} to="/parent/chat">Chat</Nav.Link>
               
             </Nav>
@@ -50,7 +52,8 @@ function Parent() {
         <Route path="gallery" element={<Gallery />} />
         <Route path="events" element={<EventsPage />} />
         <Route path="chat" element={<Chat />} />
-        
+        <Route path="waivers" element={<Waivers />} />
+
       </Routes>
     </div>
   );

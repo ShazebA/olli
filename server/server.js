@@ -14,6 +14,7 @@ const app = express();
 const upload = multer();
 const feedBackroutes = require('./routes/feedBackroutes');
 const Message = require('./schemas/Message'); // Adjust the path based on your structure
+const Waiver = require('./schemas/Waiver'); // Adjust the path based on your structure
 
 
 
@@ -445,6 +446,121 @@ app.get('/api/messages/:group', authenticateUser, async (req, res) => {
         res.status(500).json({ message: "Failed to delete message." });
     }
 });
+
+app.post('/api/waivers', authenticateToken, async (req, res) => {
+    try {
+      const { name, date, description } = req.body;
+      const signedList = [];
+  
+      const newWaiver = new Waiver({
+        name,
+        date,
+        description,
+        signedList,
+      });
+  
+      const savedWaiver = await newWaiver.save();
+      res.status(201).json(savedWaiver);
+    } catch (error) {
+      console.error('Error creating waiver:', error);
+      res.status(500).json({ message: 'Failed to create waiver.' });
+    }
+  });
+  
+  // Update an existing waiver
+  app.put('/api/waivers/:waiverID', authenticateToken, async (req, res) => {
+    try {
+      const { waiverID } = req.params;
+      const { name, date, description } = req.body;
+  
+      const updatedWaiver = await Waiver.findByIdAndUpdate(
+        waiverID,
+        { name, date, description },
+        { new: true }
+      );
+  
+      if (!updatedWaiver) {
+        return res.status(404).json({ message: 'Waiver not found.' });
+      }
+  
+      res.json(updatedWaiver);
+    } catch (error) {
+      console.error('Error updating waiver:', error);
+      res.status(500).json({ message: 'Failed to update waiver.' });
+    }
+  });
+  
+  // Sign a waiver
+  app.post('/api/waivers/:waiverID/sign', authenticateUser, async (req, res) => {
+    try {
+      const { waiverID } = req.params;
+      const parentId = req.user._id;
+  
+      const waiver = await Waiver.findById(waiverID);
+  
+      if (!waiver) {
+        return res.status(404).json({ message: 'Waiver not found.' });
+      }
+  
+      if (waiver.signedList.includes(parentId)) {
+        return res.status(400).json({ message: 'You have already signed this waiver.' });
+      }
+  
+      waiver.signedList.push(parentId);
+      const updatedWaiver = await waiver.save();
+  
+      res.json(updatedWaiver);
+    } catch (error) {
+      console.error('Error signing waiver:', error);
+      res.status(500).json({ message: 'Failed to sign waiver.' });
+    }
+  });
+
+  app.get('/api/dependents', authenticateUser, async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const dependents = await User.find({ parentId: userId });
+      res.json(dependents);
+    } catch (error) {
+      console.error('Error fetching dependents:', error);
+      res.status(500).json({ message: 'Failed to fetch dependents.' });
+    }
+  });
+
+  app.get('/api/waivers', authenticateUser, async (req, res) => {
+    try {
+      const waivers = await Waiver.find();
+      res.json(waivers);
+    } catch (error) {
+      console.error('Error fetching waivers:', error);
+      res.status(500).json({ message: 'Failed to fetch waivers.' });
+    }
+  });
+
+  app.post('/api/waivers/sign', authenticateUser, async (req, res) => {
+    try {
+      const { waiverID, parentName, dependents } = req.body;
+      const parentId = req.user._id;
+  
+      const waiver = await Waiver.findById(waiverID);
+  
+      if (!waiver) {
+        return res.status(404).json({ message: 'Waiver not found.' });
+      }
+  
+      if (waiver.signedList.some((signedParent) => signedParent.parentId.toString() === parentId.toString())) {
+        return res.status(400).json({ message: 'You have already signed this waiver.' });
+      }
+  
+      waiver.signedList.push({ parentName, parentId, dependents });
+      const updatedWaiver = await waiver.save();
+  
+      res.json(updatedWaiver);
+    } catch (error) {
+      console.error('Error signing waiver:', error);
+      res.status(500).json({ message: 'Failed to sign waiver.' });
+    }
+  });
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../olli/build', 'index.html'));
