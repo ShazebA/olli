@@ -16,6 +16,16 @@ import Parent from './parent/Parent';
 import About from './About';
 import Feedback from './Feedback';
 
+import homeIcon from './navIcons/web-home.png'; 
+import aboutIcon from './navIcons/work-team.png';
+import galleryIcon from './navIcons/landscape-image.png';
+import eventsIcon from './navIcons/computer-monitor-and-cellphone.png';
+import contactIcon from './navIcons/place-localizer.png';
+import loginIcon from './navIcons/email-envelope.png';
+import newsletterIcon from './navIcons/consulting-message.png';
+import feedbackIcon from './navIcons/search-tool.png';
+
+
 
 
 
@@ -35,28 +45,26 @@ function NavigationBar({ toggleTheme }) {
   const token = getToken();
 
   return (
-      <Navbar expand="lg" className="bg-body-tertiary">
-        <Container>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/about">About</Nav.Link> {/* New About link */}
-              <Nav.Link as={Link} to="/gallery">Gallery</Nav.Link>
-              <Nav.Link as={Link} to="/events">Events</Nav.Link>
-              <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
-              {!token && <Nav.Link as={Link} to="/login">Login</Nav.Link>}
-              <Nav.Link as={Link} to="/signup">Newsletter</Nav.Link>
-              <Nav.Link as={Link} to="/feedback">Feedback</Nav.Link>
-            </Nav>
-            <button onClick={toggleTheme} style={{ marginLeft: 'auto' }}>Light/Dark/High Contrast</button>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/"><img src={homeIcon} alt="Home" /> Home</Nav.Link>
+            <Nav.Link as={Link} to="/about"><img src={aboutIcon} alt="About" /> About</Nav.Link>
+            <Nav.Link as={Link} to="/gallery"><img src={galleryIcon} alt="Gallery" /> Gallery</Nav.Link>
+            <Nav.Link as={Link} to="/events"><img src={eventsIcon} alt="Events" /> Events</Nav.Link>
+            <Nav.Link as={Link} to="/contact"><img src={contactIcon} alt="Contact" /> Contact</Nav.Link>
+            {!token && <Nav.Link as={Link} to="/login"><img src={loginIcon} alt="Login" /> Login</Nav.Link>}
+            <Nav.Link as={Link} to="/signup"><img src={newsletterIcon} alt="Newsletter" /> Newsletter</Nav.Link>
+            <Nav.Link as={Link} to="/feedback"><img src={feedbackIcon} alt="Feedback" /> Feedback</Nav.Link>
+          </Nav>
+          <button onClick={toggleTheme} style={{ marginLeft: 'auto' }}>Light/Dark/High Contrast</button>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
-
 function App() {
 
    // State for managing theme
@@ -107,3 +115,5 @@ function AppWrapper() {
 }
 
 export default AppWrapper;
+
+
