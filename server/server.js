@@ -15,6 +15,7 @@ const upload = multer();
 const feedBackroutes = require('./routes/feedBackroutes');
 const Message = require('./schemas/Message'); // Adjust the path based on your structure
 const Waiver = require('./schemas/Waiver'); // Adjust the path based on your structure
+const Clock  = require('./schemas/Clock');
 
 
 
@@ -561,6 +562,96 @@ app.post('/api/waivers', authenticateToken, async (req, res) => {
       res.status(500).json({ message: 'Failed to sign waiver.' });
     }
   });
+
+  app.post('/api/clock', async (req, res) => {
+    try {
+        const { name, date, clockInTime, clockOutTime, breaks, comments } = req.body;
+        console.log(req.body)
+        
+        const record = new Clock({
+            name,
+            date,
+            clockInTime,
+            clockOutTime,
+            breaks, 
+            comments
+        });
+
+        await record.save();
+        res.status(201).json({ message: "Record saved successfully", data: record });
+    } catch (error) {
+        console.error('Failed to save employee time tracking record:', error);
+        res.status(500).json({ message: 'Failed to save record', error: error.message });
+    }
+});
+
+
+app.get('/api/clock', async (req, res) => {
+    try {
+        const records = await Clock.find();
+        res.json(records);
+    } catch (error) {
+        console.error('Failed to fetch records:', error);
+        res.status(500).json({ message: 'Failed to fetch records', error: error.message });
+    }
+})
+
+app.patch('/api/clock/:id/clockout', async (req, res) => {
+  try {
+      const { id } = req.params; 
+
+      console.log(id)
+      const { clockOutTime } = req.body; 
+
+      if (!clockOutTime) {
+          return res.status(400).json({ message: "Clock-out time is required." });
+      }
+
+      
+      const updatedRecord = await Clock.findByIdAndUpdate(
+          id, 
+          { $set: { clockOutTime: clockOutTime } }, 
+          { new: true } 
+      );
+
+      if (!updatedRecord) {
+          return res.status(404).json({ message: "Clock record not found." });
+      }
+
+      res.json({ message: "Clock-out time updated successfully", data: updatedRecord });
+  } catch (error) {
+      console.error('Failed to update clock-out time:', error);
+      res.status(500).json({ message: 'Failed to update clock-out time', error: error.message });
+  }
+});
+
+app.patch('/api/clock/:id/decision', async (req, res) => {
+  try {
+      const { id } = req.params; 
+      const { decision } = req.body; 
+
+      // Validate the decision
+      if (!decision || (decision !== 'Approved' && decision !== 'Denied')) {
+          return res.status(400).json({ message: "Invalid decision. Must be either 'Approved' or 'Denied'." });
+      }
+
+      
+      const updatedRecord = await Clock.findByIdAndUpdate(
+          id,
+          { $set: { decision: decision } },
+          { new: true } 
+      );
+
+      if (!updatedRecord) {
+          return res.status(404).json({ message: "Clock record not found." });
+      }
+
+      res.json({ message: "Decision updated successfully", data: updatedRecord });
+  } catch (error) {
+      console.error('Failed to update clock record decision:', error);
+      res.status(500).json({ message: 'Failed to update decision', error: error.message });
+  }
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../olli/build', 'index.html'));

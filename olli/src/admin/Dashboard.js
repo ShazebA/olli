@@ -10,6 +10,7 @@ import ManageUser from './ManageUser'
 import Register from './Register';
 import FeedbackDisplay from './FeedbackDisplay'; 
 import Chat from '../chat/Chat';
+import ClockInfo from './ClockInfo';
 import FormBuilder from './FormBuilder';
 
 function Dashboard() {
@@ -19,7 +20,8 @@ function Dashboard() {
   function logoutUser(){
     let decision = window.confirm('Are you sure you want to log out?')
     if(decision){
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('token');
+      localStorage.removeItem('isAdmin');
     navigate('/')
     }
     else{
@@ -44,6 +46,7 @@ function Dashboard() {
               <Nav.Link as={Link} to="/dashboard/manage">Manage Users</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/register">Register Account</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/formbuilder">Form Builder</Nav.Link>
+              <Nav.Link as={Link} to="/dashboard/clockinfo">Clock Info</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/feedback">Feedback</Nav.Link> 
               
             </Nav>
@@ -64,6 +67,7 @@ function Dashboard() {
         <Route path="manage" element={<ManageUser/>} />
         <Route path="register" element={<Register />} />
         <Route path="formbuilder" element={<FormBuilder />} />
+        <Route path="clockinfo" element={<ClockInfo/>} />
         <Route path="feedback" element={<FeedbackDisplay />} /> 
 
       </Routes>

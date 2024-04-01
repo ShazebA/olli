@@ -262,22 +262,6 @@ function About(){
               </Card>
             </Col>
           </Row>
-
-            {/* Feedback Section */}
-          <Row className="my-3">
-          <Card>
-                <Card.Body>
-                  <Card.Title>Feedback</Card.Title>
-                 <Card.Text>
-                 
-                  </Card.Text>
-                  <Col>
-                  <FeedbackForm />
-                </Col>
-                </Card.Body>
-              </Card>
-            
-          </Row>
         </Container>
 
         

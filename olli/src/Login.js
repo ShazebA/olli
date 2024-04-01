@@ -24,7 +24,7 @@ export default function Login({setToken}) {
 
   useEffect(() => {
     
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
     }
@@ -33,9 +33,9 @@ export default function Login({setToken}) {
 
   useEffect(() => {
     
-    const token = sessionStorage.getItem('token');
-    const isAdmin = sessionStorage.getItem('isAdmin'); 
-    const isParent =  sessionStorage.getItem('isParent');
+    const token = localStorage.getItem('token');
+    const isAdmin = localStorage.getItem('isAdmin'); 
+    const isParent =  localStorage.getItem('isParent');
     if (token) {
       setIsAuthenticated(true);
       setIsAdmin(isAdmin);
@@ -101,14 +101,14 @@ export default function Login({setToken}) {
       
       if(parse.isAdmin===true){
         alert('Login successful!')
-        sessionStorage.setItem('token', token.accessToken);
-        sessionStorage.setItem('isAdmin', isAdmin);
+        localStorage.setItem('token', token.accessToken);
+        localStorage.setItem('isAdmin', isAdmin);
         navigate('/dashboard')
         return;
       }else if(parse.isParent===true)
       alert('Login successful!')
-      sessionStorage.setItem('token', token.accessToken);
-      sessionStorage.setItem('isParent', isParent);
+      localStorage.setItem('token', token.accessToken);
+      localStorage.setItem('isParent', isParent);
       navigate('/parent')
       return;
     }

@@ -8,6 +8,7 @@ import Gallery from '../Gallery';
 import EventsPage from '../EventsPage';
 import Chat from '../chat/Chat';
 import Waivers from './Waivers';
+import Clock from './Clock'
 
 
 function Parent() {
@@ -33,9 +34,11 @@ function Parent() {
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/parent">Dashboard Home</Nav.Link>
               <Nav.Link as={Link} to="/parent/gallery">Gallery</Nav.Link>
+              <Nav.Link as={Link} to="/parent/clock">Clock</Nav.Link>
               <Nav.Link as={Link} to="/parent/events">Events</Nav.Link>
               <Nav.Link as={Link} to="/parent/waivers">Waivers</Nav.Link>
               <Nav.Link as={Link} to="/parent/chat">Chat</Nav.Link>
+              
               
             </Nav>
             <Nav className="justify-content-end">
@@ -53,6 +56,7 @@ function Parent() {
         <Route path="events" element={<EventsPage />} />
         <Route path="chat" element={<Chat />} />
         <Route path="waivers" element={<Waivers />} />
+        <Route path="clock" element={<Clock/>} />
 
       </Routes>
     </div>

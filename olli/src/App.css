@@ -76,3 +76,6 @@
 .remove-user-btn:hover {
   background-color: #d32f2f;
 }
+#main-content{
+  margin-bottom: 125px;
+}
