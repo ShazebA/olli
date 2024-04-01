@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate} from 'react-router-dom'; 
 import { Navbar, Nav ,NavDropdown} from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import DashboardHome from './DashboardHome';
@@ -12,6 +12,13 @@ import FeedbackDisplay from './FeedbackDisplay';
 import Chat from '../chat/Chat';
 import ClockInfo from './ClockInfo';
 import FormBuilder from './FormBuilder';
+import io from 'socket.io-client'
+import { MDBCard } from 'mdb-react-ui-kit';
+import './Dashboard.css'
+
+
+
+const socket = io('http://localhost:8080')
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -31,14 +38,34 @@ function Dashboard() {
 
   }
 
+  function ActiveUsersCounter() {
+    const [activeUsers, setActiveUsers] = useState(0);
+
+    useEffect(() => {
+        socket.on('active users', (count) => {
+            setActiveUsers(count);
+        });
+
+        return () => {
+            socket.off('active users');
+        };
+    }, []);
+
+    return <div>Active users: {activeUsers}</div>;
+}
+
 
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary">
+      <MDBCard id='activeUsers'>
+                <ActiveUsersCounter></ActiveUsersCounter>
+              </MDBCard>
         <Container>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
+              
               <Nav.Link as={Link} to="/dashboard">Dashboard Home</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/gallery">Gallery</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/events">Events</Nav.Link>

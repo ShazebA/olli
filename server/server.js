@@ -12,6 +12,8 @@ const mongoose  = require('mongoose');
 const { access } = require('fs');
 const app = express();
 const upload = multer();
+const http = require('http')
+const {Server} = require('socket.io')
 const feedBackroutes = require('./routes/feedBackroutes');
 const Message = require('./schemas/Message'); // Adjust the path based on your structure
 const Waiver = require('./schemas/Waiver'); // Adjust the path based on your structure
@@ -19,20 +21,41 @@ const Clock  = require('./schemas/Clock');
 
 
 
-app.use(cors({
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors:{
     origin: '*', // or '*' to allow any origin
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // allowed headers
     credentials: true, // to allow cookies to be sent with the request
-  }));
+  }
+});
+
+let activeUsers = 0;
+
+io.on('connection', (socket) => {
+    activeUsers++;
+    console.log(`Active users: ${activeUsers}`);
+    io.emit('active users', activeUsers);
+
+    socket.on('disconnect', () => {
+        activeUsers--;
+        console.log(`Active users: ${activeUsers}`);
+        io.emit('active users', activeUsers);
+    });
+});
+
+
 app.use(express.static(path.join(__dirname, '..', 'olli','build')));
 app.use(express.json())
 app.use(upload.none());
+
 
 let port = process.env.PORT || 8080;
 const portEmail = process.env.PORT || 3001;
 
 const mongoURI = process.env.MONGO_URI
+
 
 
 mongoose.connect(mongoURI, {
@@ -44,6 +67,8 @@ mongoose.connect(mongoURI, {
 app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname, "..", 'build', 'index.html'))
 })
+
+
 
 app.use('/feedback', feedBackroutes);
 
