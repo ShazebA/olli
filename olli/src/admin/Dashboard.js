@@ -15,6 +15,7 @@ import FormBuilder from './FormBuilder';
 import io from 'socket.io-client'
 import { MDBCard } from 'mdb-react-ui-kit';
 import './Dashboard.css'
+import NewsletterSubscribers from './NewsletterSubscribers';
 
 
 
@@ -74,6 +75,7 @@ function Dashboard() {
               <Nav.Link as={Link} to="/dashboard/register">Register Account</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/formbuilder">Form Builder</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/clockinfo">Clock Info</Nav.Link>
+              <Nav.Link as={Link} to="/dashboard/subscribers">Subscribers</Nav.Link>
               <Nav.Link as={Link} to="/dashboard/feedback">Feedback</Nav.Link> 
               
             </Nav>
@@ -95,6 +97,7 @@ function Dashboard() {
         <Route path="register" element={<Register />} />
         <Route path="formbuilder" element={<FormBuilder />} />
         <Route path="clockinfo" element={<ClockInfo/>} />
+        <Route path='subscribers' element={<NewsletterSubscribers></NewsletterSubscribers>}/>
         <Route path="feedback" element={<FeedbackDisplay />} /> 
 
       </Routes>

@@ -15,11 +15,9 @@ const upload = multer();
 const http = require('http')
 const {Server} = require('socket.io')
 const feedBackroutes = require('./routes/feedBackroutes');
-const Message = require('./schemas/Message'); // Adjust the path based on your structure
-const Waiver = require('./schemas/Waiver'); // Adjust the path based on your structure
+const Message = require('./schemas/Message'); 
+const Waiver = require('./schemas/Waiver'); 
 const Clock  = require('./schemas/Clock');
-
-
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -347,6 +345,20 @@ app.post('/api/newsletter/signup', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while signing up for the newsletter.' });
     }
 });
+
+app.get('/api/newsletter/subscribers', async (req, res) => {
+  try {
+     
+      const subscribers = await UserNewsletter.find({});
+      
+      res.status(200).json(subscribers);
+  } catch (err) {
+      
+      console.error(err);
+      res.status(500).json({ error: 'An error occurred while retrieving subscribers.' });
+  }
+});
+
 
 app.get('/api/users', async(req,res)=>{
     try{
