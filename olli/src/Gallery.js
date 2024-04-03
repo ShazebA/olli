@@ -70,12 +70,12 @@ const Gallery = () => {
         </Row>
 
         {/* Image upload section */}
-        <Row className="mt-4">
+        <Container className="mt-4">
           <Col>
             <h4>Upload Images</h4> {/* Title for the upload section */}
             <input type="file" accept="image/*" onChange={handleImageUpload} multiple />
           </Col>
-        </Row>
+        </Container>
       </div>
       <AccessibilityFooter />
     </Container>
