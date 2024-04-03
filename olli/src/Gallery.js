@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVolumeUp } from '@fortawesome/free-solid-svg-icons';
+import { faVolumeUp, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import AccessibilityFooter from './AccessibilityFooter';
 
@@ -10,14 +10,27 @@ import image3 from "./istockphoto-486325400-612x612.jpg";
 import image4 from "./istockphoto-1168454133-1024x1024.jpg";
 import image5 from "./istockphoto-539281953-612x612.jpg";
 import image6 from "./istockphoto-1324653833-612x612.jpg";
-// import defaultImage from "./default-image.jpg"; // You can use a default image for placeholders
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
 
   const handleImageUpload = (event) => {
     const uploadedImages = Array.from(event.target.files);
+    const uploadedImageNames = uploadedImages.map(image => image.name); // Extracting initial names
     setImages(prevImages => [...prevImages, ...uploadedImages]);
+    setImageNames(prevNames => [...prevNames, ...uploadedImageNames]);
+  };
+
+  const handleImageNameChange = (event, index) => {
+    const updatedImageNames = [...imageNames];
+    updatedImageNames[index] = event.target.value;
+    setImageNames(updatedImageNames);
+  };
+
+  const removeUploadedImage = (index) => {
+    setImages(prevImages => prevImages.filter((_, i) => i !== index));
+    setImageNames(prevNames => prevNames.filter((_, i) => i !== index));
   };
 
   const speakText = (text) => {
@@ -61,8 +74,11 @@ const Gallery = () => {
             <Col key={index} md={4} sm={6} xs={12} className="mb-4">
               <Card className="gallery-card" style={{ position: 'relative' }}>
                 <Card.Img variant="top" src={URL.createObjectURL(image)} alt={`Uploaded Image ${index + 1}`} />
+                <Button style={{ position: 'absolute', bottom: '10px', right: '10px', zIndex: 1 }} variant="outline-light" onClick={() => removeUploadedImage(index)}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
                 <Card.Body>
-                  <Card.Title>Uploaded Image {index + 1}</Card.Title>
+                  <input type="text" value={imageNames[index]} onChange={(event) => handleImageNameChange(event, index)} /> {/* Input field for image name */}
                 </Card.Body>
               </Card>
             </Col>
@@ -70,12 +86,12 @@ const Gallery = () => {
         </Row>
 
         {/* Image upload section */}
-        <Container className="mt-4">
-          <Col>
-            <h4>Upload Images</h4> {/* Title for the upload section */}
+        <Row className="mt-4 justify-content-center">
+          <Col md={6} className="text-center">
+            <h4>Upload Images</h4>
             <input type="file" accept="image/*" onChange={handleImageUpload} multiple />
           </Col>
-        </Container>
+        </Row>
       </div>
       <AccessibilityFooter />
     </Container>
