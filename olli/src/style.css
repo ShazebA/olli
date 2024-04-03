@@ -242,3 +242,9 @@ body {
   width: 20px; 
   height: 20px; 
 }
+
+#sponsors-card{
+  margin-top: 10px;
+  
+  font-size: smaller;
+}
