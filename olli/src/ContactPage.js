@@ -116,12 +116,12 @@ export const ContactPage = () => {
                 <input type="text" className={`form-control ${!validation.from_first_name ? 'invalid' : ''}`} name="from_first_name" id="from_first_name" placeholder="First Name" onChange={handleInputChange}/>
               </div>
               <div className="form-group">
-                <label htmlFor="from_last_name"></label>
+                <label htmlFor="from_last_name"> *</label>
                 <input type="text" className="form-control" name="from_last_name" id="from_last_name" placeholder="Last Name" />
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="from_email">Email Address: *</label>
+              <label htmlFor="from_email">Email address: *</label>
               <input type="email" className={`form-control ${!validation.from_email ? 'invalid' : ''}`} name="from_email" id="from_email" placeholder="ex. username@email.com" onChange={handleInputChange}/>
             </div>
             <div className="form-group">
